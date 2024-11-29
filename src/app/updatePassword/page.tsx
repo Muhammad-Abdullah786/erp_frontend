@@ -1,4 +1,3 @@
-
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -35,8 +34,37 @@ export default function UpdatePassword() {
     }
   };
 
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+
+  //   if (newPassword !== confirmPassword) {
+  //     setError("Passwords do not match.");
+  //     return;
+  //   }
+
+  //   setIsLoading(true);
+  //   setError(null);
+
+  //   try {
+  //     await updatePasswordRequest(token, newPassword);
+  //     toast.success("Password updated successfully!");
+  //     router.push("/login");
+  //   } catch (err: any) {
+  //     setError(err?.message || "An error occurred. Please try again.");
+  //     toast.error("Failed to update password. Please try again.");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!token) {
+      toast.error("Invalid or missing reset token.");
+      router.push("/forgot-password");
+      return;
+    }
 
     if (newPassword !== confirmPassword) {
       setError("Passwords do not match.");
@@ -47,7 +75,7 @@ export default function UpdatePassword() {
     setError(null);
 
     try {
-      await updatePasswordRequest(token, newPassword);
+      await updatePasswordRequest(token, newPassword); // Safe because we checked `token` is not null.
       toast.success("Password updated successfully!");
       router.push("/login");
     } catch (err: any) {
