@@ -1,4 +1,5 @@
 // /src/services/authService.ts
+"use client";
 import axios from "axios";
 import { url } from "@/apiURL";
 export const registerClient = async (clientData: any) => {
