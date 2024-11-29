@@ -2,8 +2,15 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+// import { Button } from "@/components/ui/button";
+// import {
+//   Dialog,
+//   DialogTrigger,
+//   DialogContent,
+//   DialogTitle,
+//   DialogDescription,
+//   DialogFooter,
+// } from "@/components/ui/dialog";
 import { toast } from "react-toastify";
 
 export default function DashboardPage() {
@@ -34,7 +41,8 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-3xl font-bold mb-8">Welcome to the Dashboard</h1>
-      
+      hello
+      {/*       
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <Button variant="destructive" onClick={() => setIsDialogOpen(true)}>Logout</Button>
@@ -47,7 +55,7 @@ export default function DashboardPage() {
             <Button variant="destructive" onClick={handleLogout}>Yes, Logout</Button>
           </DialogFooter>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 }

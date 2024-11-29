@@ -34,29 +34,6 @@ export default function UpdatePassword() {
     }
   };
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   if (newPassword !== confirmPassword) {
-  //     setError("Passwords do not match.");
-  //     return;
-  //   }
-
-  //   setIsLoading(true);
-  //   setError(null);
-
-  //   try {
-  //     await updatePasswordRequest(token, newPassword);
-  //     toast.success("Password updated successfully!");
-  //     router.push("/login");
-  //   } catch (err: any) {
-  //     setError(err?.message || "An error occurred. Please try again.");
-  //     toast.error("Failed to update password. Please try again.");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
