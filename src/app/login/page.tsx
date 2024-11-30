@@ -34,7 +34,7 @@ export default function LoginPage() {
           localStorage.setItem("token", data.token); // Store token
         }
         toast.success("Login successful! Redirecting to dashboard...");
-        setTimeout(() => router.push("/dashboard"), 1500); // Redirect to dashboard
+        setTimeout(() => router.push("/home"), 1500); // Redirect to dashboard
         return data;
       } catch (err) {
         toast.error("Login failed. Please try again.");
