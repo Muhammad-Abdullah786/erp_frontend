@@ -81,9 +81,6 @@ const Payment = () => {
       );
       set_payment_success_loading(false);
       set_payment_loading(false);
-      return;
-      set_payment_success_loading(false);
-      set_payment_loading(false);
     } else if (paymentIntent) {
       await post_container_booking();
       // toast({

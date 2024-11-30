@@ -27,7 +27,12 @@ const Client_Container_History = () => {
   const fetcher = async () => {
     try {
       const fetch_data = await axios.get(
-        `${url}/container/container_client_history`
+        `${url}/container/container_client_history`,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
       );
       console.log(fetch_data);
       return fetch_data.data.data;

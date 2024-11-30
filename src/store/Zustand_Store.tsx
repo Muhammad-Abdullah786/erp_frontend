@@ -16,7 +16,11 @@ const useStore = create<any>((set : any , get: any) => ({
    try {
         const form_data = get().form_data;
         console.log(form_data);
-      const post_data = await axios.post(`${url}/container/booked_container` , form_data );
+      const post_data = await axios.post(`${url}/container/booked_container` , form_data , {
+        headers : {
+          token : localStorage.getItem('token')
+        }
+      });
       if(post_data.status === 200) {
         console.log(post_data);
       }

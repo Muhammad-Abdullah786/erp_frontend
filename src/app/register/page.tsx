@@ -1,5 +1,5 @@
 "use client";
-import {url} from '@/apiURL'
+import { url } from "@/apiURL";
 import { useState } from "react";
 import useSWRMutation from "swr/mutation";
 import { useRouter } from "next/navigation";
@@ -26,23 +26,24 @@ export default function RegisterPage() {
 
   const router = useRouter();
 
-  const { trigger: register, isMutating: isLoading, error } = useSWRMutation(
-    `${url}/client/register`,
-    async (_, { arg }) => {
-      try {
-        const data = await registerClient(arg);
-        // Store the token in localStorage after successful registration
-        if (data.token) {
-          localStorage.setItem("token", data.token); // Store token
-        }
-        toast.success("Registration successful! Redirecting to dashboard...");
-        setTimeout(() => router.push("/dashboard"), 1500); // Redirect to dashboard
-        return data;
-      } catch (err) {
-        toast.error("Registration failed. Please try again.");
+  const {
+    trigger: register,
+    isMutating: isLoading,
+    error,
+  } = useSWRMutation(`${url}/client/register`, async (_, { arg }) => {
+    try {
+      const data = await registerClient(arg);
+      // Store the token in localStorage after successful registration
+      if (data.token) {
+        localStorage.setItem("token", data.token); // Store token
       }
+      toast.success("Registration successful! Redirecting to dashboard...");
+      setTimeout(() => router.push("/home"), 1500); // Redirect to dashboard
+      return data;
+    } catch (err) {
+      toast.error("Registration failed. Please try again.");
     }
-  );
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -51,7 +52,12 @@ export default function RegisterPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
       alert("Please fill out all required fields.");
       return;
     }

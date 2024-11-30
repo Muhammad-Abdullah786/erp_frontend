@@ -1,6 +1,6 @@
 "use client";
 import { RxEyeClosed } from "react-icons/rx";
-import Link from 'next/link'
+import Link from "next/link";
 import { useState } from "react";
 import useSWRMutation from "swr/mutation";
 import { useRouter } from "next/navigation"; // For redirection
@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "react-toastify"; // Toast notification
 import { TfiEye } from "react-icons/tfi";
-import {url} from '@/apiURL'
+import { url } from "@/apiURL";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState<any>({
@@ -24,23 +24,20 @@ export default function LoginPage() {
     trigger: login,
     isMutating: isLoading,
     error,
-  } = useSWRMutation(
-    `${url}/client/login`,
-    async (_, { arg }) => {
-      try {
-        const data = await loginClient(arg);
-        // Store the token in local storage
-        if (data.token) {
-          localStorage.setItem("token", data.token); // Store token
-        }
-        toast.success("Login successful! Redirecting to dashboard...");
-        setTimeout(() => router.push("/home"), 1500); // Redirect to dashboard
-        return data;
-      } catch (err) {
-        toast.error("Login failed. Please try again.");
+  } = useSWRMutation(`${url}/client/login`, async (_, { arg }) => {
+    try {
+      const data = await loginClient(arg);
+      // Store the token in local storage
+      if (data.token) {
+        localStorage.setItem("token", data.token); // Store token
       }
+      toast.success("Login successful! Redirecting to Home page");
+      router.push("/home"); // Redirect to dashboard
+      return data;
+    } catch (err) {
+      toast.error("Login failed. Please try again.");
     }
-  );
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -90,9 +87,14 @@ export default function LoginPage() {
           <Button type="submit" disabled={isLoading} className="w-full">
             {isLoading ? "Logging in..." : "Login"}
           </Button>
-        <div className="text-end">
-            <Link className="text-sm text-blue-600 underline hover:unset" href="/forgotPassword">Forgot Password</Link>
-        </div>
+          <div className="text-end">
+            <Link
+              className="text-sm text-blue-600 underline hover:unset"
+              href="/forgotPassword"
+            >
+              Forgot Password
+            </Link>
+          </div>
 
           {error && <p className="text-red-500">{error.message}</p>}
 

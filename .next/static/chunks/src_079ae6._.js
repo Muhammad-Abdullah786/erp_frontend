@@ -8,7 +8,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 __turbopack_esm__({
     "url": (()=>url)
 });
-const url = "https://erp-woad-pi.vercel.app/v1";
+const url = "https://erp-woad-pi.vercel.app/v1"; // export const url = "http://localhost:3000/v1";
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }
@@ -48,7 +48,11 @@ const useStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_module
             try {
                 const form_data = get().form_data;
                 console.log(form_data);
-                const post_data = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["url"]}/container/booked_container`, form_data);
+                const post_data = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["url"]}/container/booked_container`, form_data, {
+                    headers: {
+                        token: localStorage.getItem('token')
+                    }
+                });
                 if (post_data.status === 200) {
                     console.log(post_data);
                 }
@@ -382,8 +386,6 @@ const Payment = ()=>{
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$react$2d$toastify$2e$esm$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error(`Payment Failed! Please try Again  ${new Date().toLocaleDateString()} \n ${error.message || "Something went wrong with the payment."}`);
             set_payment_success_loading(false);
             set_payment_loading(false);
-            return;
-            "TURBOPACK unreachable";
         } else if (paymentIntent) {
             await post_container_booking();
             // toast({
@@ -408,7 +410,7 @@ const Payment = ()=>{
                     children: "Enter Card Details"
                 }, void 0, false, {
                     fileName: "[project]/src/components/Payment/Payment.tsx",
-                    lineNumber: 107,
+                    lineNumber: 104,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -425,14 +427,14 @@ const Payment = ()=>{
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Payment/Payment.tsx",
-                            lineNumber: 113,
+                            lineNumber: 110,
                             columnNumber: 11
                         }, this),
                         ". Click the button below to make your payment securely and hassle-free. We appreciate your trust and look forward to serving you!"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Payment/Payment.tsx",
-                    lineNumber: 110,
+                    lineNumber: 107,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -447,7 +449,7 @@ const Payment = ()=>{
                                     children: "Credit or Debit Card"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Payment/Payment.tsx",
-                                    lineNumber: 122,
+                                    lineNumber: 119,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$stripe$2f$react$2d$stripe$2d$js$2f$dist$2f$react$2d$stripe$2e$umd$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardElement"], {
@@ -455,13 +457,13 @@ const Payment = ()=>{
                                     className: "mt-2 p-3 border rounded-md shadow-sm"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Payment/Payment.tsx",
-                                    lineNumber: 123,
+                                    lineNumber: 120,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Payment/Payment.tsx",
-                            lineNumber: 121,
+                            lineNumber: 118,
                             columnNumber: 11
                         }, this),
                         payment_success_loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -472,14 +474,14 @@ const Payment = ()=>{
                                     className: "animate-spin"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Payment/Payment.tsx",
-                                    lineNumber: 131,
+                                    lineNumber: 128,
                                     columnNumber: 15
                                 }, this),
                                 "Please wait"
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Payment/Payment.tsx",
-                            lineNumber: 130,
+                            lineNumber: 127,
                             columnNumber: 13
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                             type: "submit",
@@ -487,24 +489,24 @@ const Payment = ()=>{
                             children: "Pay Now"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Payment/Payment.tsx",
-                            lineNumber: 135,
+                            lineNumber: 132,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Payment/Payment.tsx",
-                    lineNumber: 120,
+                    lineNumber: 117,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/Payment/Payment.tsx",
-            lineNumber: 106,
+            lineNumber: 103,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Payment/Payment.tsx",
-        lineNumber: 105,
+        lineNumber: 102,
         columnNumber: 5
     }, this);
 };
