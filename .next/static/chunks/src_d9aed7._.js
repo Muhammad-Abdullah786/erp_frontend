@@ -21,7 +21,9 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 {
 // /src/services/authService.ts
 __turbopack_esm__({
+    "loginAdmin": (()=>loginAdmin),
     "loginClient": (()=>loginClient),
+    "loginEmployee": (()=>loginEmployee),
     "registerClient": (()=>registerClient),
     "resetPasswordRequest": (()=>resetPasswordRequest),
     "updatePasswordRequest": (()=>updatePasswordRequest)
@@ -39,20 +41,21 @@ const registerClient = async (clientData)=>{
     // throw error; // Rethrow the error so the mutation can catch it
     }
 };
-async function loginClient(credentials) {
-    const response = await fetch(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["url"]}/client/login`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(credentials)
-    });
-    if (!response.ok) {
-        throw new Error("Login failed");
-    }
-    const data = await response.json();
-    return data; // Assuming 'data' contains the token and other user details
-}
+const loginClient = async (credentials)=>{
+    const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["url"]}/client/login`, credentials);
+    if (response.status !== 200) throw new Error("Login failed");
+    return response.data; // Assuming response contains the token and other user details
+};
+const loginAdmin = async (credentials)=>{
+    const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["url"]}/admin/login`, credentials);
+    if (response.status !== 200) throw new Error("Login failed");
+    return response.data;
+};
+const loginEmployee = async (credentials)=>{
+    const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["url"]}/employee/login`, credentials);
+    if (response.status !== 200) throw new Error("Login failed");
+    return response.data;
+};
 const resetPasswordRequest = async (email)=>{
     const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["url"]}/client/reset-password`, {
         email
@@ -209,8 +212,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$authServi
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/ui/button.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/ui/input.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$react$2d$toastify$2e$esm$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-toastify/dist/react-toastify.esm.mjs [app-client] (ecmascript)"); // Toast notification
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$tfi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-icons/tfi/index.mjs [app-client] (ecmascript)"); // Eye icon for showing password
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$rx$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-icons/rx/index.mjs [app-client] (ecmascript)"); // Eye closed icon for hiding password
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$tfi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-icons/tfi/index.mjs [app-client] (ecmascript)"); // Eye icon for showing password
 ;
 var _s = __turbopack_refresh__.signature();
 "use client";
@@ -228,6 +231,7 @@ function RegisterPage() {
     _s();
     const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
         name: "",
+        username: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -235,21 +239,20 @@ function RegisterPage() {
         address: "",
         cnicOrPassport: ""
     });
-    const [showPassword, setShowPassword] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false); // Toggle for password visibility
-    const [showConfirmPassword, setShowConfirmPassword] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false); // Toggle for confirm password visibility
+    const [showPassword, setShowPassword] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [showConfirmPassword, setShowConfirmPassword] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const { trigger: register, isMutating: isLoading, error } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swr$2f$dist$2f$mutation$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["url"]}/client/register`, {
         "RegisterPage.useSWRMutation": async (_, { arg })=>{
             try {
                 const data = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$authService$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["registerClient"])(arg);
-                // Store the token in localStorage after successful registration
                 if (data.token) {
-                    localStorage.setItem("token", data.token); // Store token
+                    localStorage.setItem("token", data.token);
                 }
-                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$react$2d$toastify$2e$esm$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success("Registration successful! Redirecting to dashboard...");
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$react$2d$toastify$2e$esm$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success("Registration successful! Redirecting to Login...");
                 setTimeout({
-                    "RegisterPage.useSWRMutation": ()=>router.push("/home")
-                }["RegisterPage.useSWRMutation"], 1500); // Redirect to dashboard
+                    "RegisterPage.useSWRMutation": ()=>router.push("/login")
+                }["RegisterPage.useSWRMutation"], 1000);
                 return data;
             } catch (err) {
                 __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$react$2d$toastify$2e$esm$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error("Registration failed. Please try again.");
@@ -264,7 +267,8 @@ function RegisterPage() {
     };
     const handleSubmit = (e)=>{
         e.preventDefault();
-        if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+        if (!formData.name || !formData.username || // Check if username is filled
+        !formData.email || !formData.password || !formData.confirmPassword) {
             alert("Please fill out all required fields.");
             return;
         }
@@ -284,7 +288,7 @@ function RegisterPage() {
                     children: "Register"
                 }, void 0, false, {
                     fileName: "[project]/src/app/register/page.tsx",
-                    lineNumber: 76,
+                    lineNumber: 77,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -298,7 +302,18 @@ function RegisterPage() {
                             onChange: handleChange
                         }, void 0, false, {
                             fileName: "[project]/src/app/register/page.tsx",
-                            lineNumber: 78,
+                            lineNumber: 79,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
+                            name: "username" // Username input field
+                            ,
+                            placeholder: "Enter your username",
+                            value: formData.username,
+                            onChange: handleChange
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/register/page.tsx",
+                            lineNumber: 86,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -309,7 +324,7 @@ function RegisterPage() {
                             onChange: handleChange
                         }, void 0, false, {
                             fileName: "[project]/src/app/register/page.tsx",
-                            lineNumber: 85,
+                            lineNumber: 93,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -323,31 +338,31 @@ function RegisterPage() {
                                     onChange: handleChange
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/register/page.tsx",
-                                    lineNumber: 94,
+                                    lineNumber: 102,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     type: "button",
                                     onClick: ()=>setShowPassword(!showPassword),
                                     className: "absolute inset-y-0 right-0 pr-3 flex items-center",
-                                    children: showPassword ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$rx$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["RxEyeClosed"], {}, void 0, false, {
+                                    children: showPassword ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$tfi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TfiEye"], {}, void 0, false, {
                                         fileName: "[project]/src/app/register/page.tsx",
-                                        lineNumber: 106,
+                                        lineNumber: 114,
                                         columnNumber: 31
-                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$tfi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TfiEye"], {}, void 0, false, {
+                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$rx$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["RxEyeClosed"], {}, void 0, false, {
                                         fileName: "[project]/src/app/register/page.tsx",
-                                        lineNumber: 106,
-                                        columnNumber: 49
+                                        lineNumber: 114,
+                                        columnNumber: 46
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/register/page.tsx",
-                                    lineNumber: 101,
+                                    lineNumber: 109,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/register/page.tsx",
-                            lineNumber: 93,
+                            lineNumber: 101,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -361,31 +376,31 @@ function RegisterPage() {
                                     onChange: handleChange
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/register/page.tsx",
-                                    lineNumber: 111,
+                                    lineNumber: 119,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     type: "button",
                                     onClick: ()=>setShowConfirmPassword(!showConfirmPassword),
                                     className: "absolute inset-y-0 right-0 pr-3 flex items-center",
-                                    children: showConfirmPassword ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$rx$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["RxEyeClosed"], {}, void 0, false, {
+                                    children: showConfirmPassword ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$tfi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TfiEye"], {}, void 0, false, {
                                         fileName: "[project]/src/app/register/page.tsx",
-                                        lineNumber: 123,
+                                        lineNumber: 131,
                                         columnNumber: 38
-                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$tfi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TfiEye"], {}, void 0, false, {
+                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$rx$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["RxEyeClosed"], {}, void 0, false, {
                                         fileName: "[project]/src/app/register/page.tsx",
-                                        lineNumber: 123,
-                                        columnNumber: 56
+                                        lineNumber: 131,
+                                        columnNumber: 53
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/register/page.tsx",
-                                    lineNumber: 118,
+                                    lineNumber: 126,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/register/page.tsx",
-                            lineNumber: 110,
+                            lineNumber: 118,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -395,7 +410,7 @@ function RegisterPage() {
                             onChange: handleChange
                         }, void 0, false, {
                             fileName: "[project]/src/app/register/page.tsx",
-                            lineNumber: 127,
+                            lineNumber: 135,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -405,7 +420,7 @@ function RegisterPage() {
                             onChange: handleChange
                         }, void 0, false, {
                             fileName: "[project]/src/app/register/page.tsx",
-                            lineNumber: 134,
+                            lineNumber: 142,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -415,7 +430,7 @@ function RegisterPage() {
                             onChange: handleChange
                         }, void 0, false, {
                             fileName: "[project]/src/app/register/page.tsx",
-                            lineNumber: 141,
+                            lineNumber: 149,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -425,7 +440,7 @@ function RegisterPage() {
                             children: isLoading ? "Registering..." : "Register"
                         }, void 0, false, {
                             fileName: "[project]/src/app/register/page.tsx",
-                            lineNumber: 148,
+                            lineNumber: 156,
                             columnNumber: 11
                         }, this),
                         error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -433,7 +448,7 @@ function RegisterPage() {
                             children: error.message
                         }, void 0, false, {
                             fileName: "[project]/src/app/register/page.tsx",
-                            lineNumber: 152,
+                            lineNumber: 160,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -447,34 +462,34 @@ function RegisterPage() {
                                     children: "Login"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/register/page.tsx",
-                                    lineNumber: 156,
+                                    lineNumber: 164,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/register/page.tsx",
-                            lineNumber: 154,
+                            lineNumber: 162,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/register/page.tsx",
-                    lineNumber: 77,
+                    lineNumber: 78,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/register/page.tsx",
-            lineNumber: 75,
+            lineNumber: 76,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/register/page.tsx",
-        lineNumber: 74,
+        lineNumber: 75,
         columnNumber: 5
     }, this);
 }
-_s(RegisterPage, "TpxjnS5gMlBbcjsEOzPWw9zumVg=", false, function() {
+_s(RegisterPage, "7LWH83wNV2yT/wZ0f3JonwmO2lg=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swr$2f$dist$2f$mutation$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"]

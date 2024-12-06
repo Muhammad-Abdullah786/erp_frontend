@@ -1,3 +1,5 @@
+
+
 "use client";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -35,15 +37,37 @@ type FormValues = {
   price: number;
   handling_type: string;
   installments: any;
+  installment_period : any ;
   installmentDetails: { installment_number: any; amount: any; status: any }[];
   receiver_details: {
     name: string;
     address: string;
+    country_code : string;
     phone: string;
   };
 };
 
+
 const Container_Book = () => {
+   
+
+  const [codes, setCodes] = useState([]);
+
+  useEffect(() => {
+    async function fetchCountryCodes() {
+      const response = await fetch("https://restcountries.com/v3.1/all");
+      const countries = await response.json();
+      const countryData = countries.map((country : any) => ({
+        name: country.name.common,
+        code: country.cca2,
+        callingCode: country.idd.root + (country.idd.suffixes ? country.idd.suffixes[0] : ""),
+      }));
+      setCodes(countryData);
+    }
+
+    fetchCountryCodes();
+  }, []);
+
   const set_client_secret = useStore((state) => state.set_client_secret);
   const save_form_data = useStore((state) => state.save_form_data);
   const payment_loading = useStore((state) => state.payment_loading);
@@ -66,6 +90,8 @@ const Container_Book = () => {
   const weight = watch("weight"); // Watch the weight field for changes
   const price = watch("price"); // Watch price field dynamically
   const installments: any = watch("installments"); // Watch installments value
+  const installment_period: any = watch("installment_period"); // Watch installment_period value
+  console.log(installment_period);
 
   useEffect(() => {
     if (weight) {
@@ -99,10 +125,10 @@ const Container_Book = () => {
         amount: any;
         status: any;
       }[] = [];
-      for (let i = 1; i <= installments; i++) {
+      for (let i = 1; i <= installment_period; i++) {
         installmentDetails.push({
           installment_number: i,
-          amount: parseFloat((totalPrice / installments).toFixed(2)), // Divide equally and round to 2 decimal places
+          amount: parseFloat((totalPrice / installment_period).toFixed(2)), // Divide equally and round to 2 decimal places
           status: i === 1 ? "paid" : "pending",
         });
       }
@@ -116,7 +142,13 @@ const Container_Book = () => {
       setValue("price", 0);
       setValue("installmentDetails", []);
     }
-  }, [weight, setValue, installments]);
+  }, [weight, setValue, installment_period]);
+
+  useEffect(() => {
+    if (installments === "full_payment") {
+      setValue("installment_period", 1); // Set default to 1 for full payment
+    }
+  }, [installments, setValue]); // Dependency to trigger when "installments" changes
 
   const client_verify = async () => {
     set_installment_amount(watch("installmentDetails")?.[0].amount);
@@ -127,10 +159,6 @@ const Container_Book = () => {
       if (client_id.status === 200) {
         console.log(client_id);
         set_client_secret(client_id.data.data);
-        // toast({
-        //   title: "Container  Booking Saved",
-        //   description: `${new Date().toLocaleDateString()}`,
-        // });
         toast.success(
           `Container Booking Saved on ${new Date().toLocaleDateString()}`
         );
@@ -146,15 +174,15 @@ const Container_Book = () => {
   };
 
   const onsubmit = (data: any) => {
-    set_payment_loading(true);
     console.log(data);
+    set_payment_loading(true);
     save_form_data(data);
     client_verify();
   };
 
   return (
     <>
-      <div className="max-w-lg mx-auto mt-10">
+      <div className="max-w-2xl mx-auto py-10">
         <Card>
           <CardHeader>
             <CardTitle>Container Booking Form</CardTitle>
@@ -288,18 +316,42 @@ const Container_Book = () => {
                 <Label htmlFor="installments">Installments</Label>
                 <Select
                   onValueChange={(value) =>
-                    setValue("installments", parseInt(value))
+                    setValue("installments", value)
                   }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select Installments" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="1">Full Payment</SelectItem>
-                    <SelectItem value="2">2 Installments</SelectItem>
+                    <SelectItem value="full_payment">Full Payment</SelectItem>
+                    <SelectItem value="installment">Installments</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
+
+          
+              {installments == 'installment' && (
+                
+                 <>
+                 
+                       <div>
+                <Label htmlFor="installments_period">Installments Period</Label>
+                <Select
+                  onValueChange={(value) =>
+                    setValue("installment_period", parseInt(value))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Installments Period" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="3">3 months</SelectItem>
+                    <SelectItem value="6">6 months</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div> 
+                 </>
+              )}
 
               <div>
                 <div>
@@ -365,6 +417,29 @@ const Container_Book = () => {
                   </p>
                 )}
               </div>
+
+              <div>
+        <Label htmlFor="country_code" className="font-semibold">Country Code: </Label>
+        <select
+          id="country_code"
+          {...register("receiver_details.country_code", {
+            required: "Country code is required",
+          })}
+          className="border p-2 rounded"
+        >
+          <option value="">Select Country Code</option>
+          {codes.map(({ code, callingCode, name }) => (
+            <option key={code} value={callingCode}>
+              {name} ({callingCode})
+            </option>
+          ))}
+        </select>
+        {errors.receiver_details?.country_code && (
+          <p className="text-red-500 text-sm">
+            {errors.receiver_details.country_code.message}
+          </p>
+        )}
+      </div>
 
               <div>
                 <Label htmlFor="receiver_phone">Receiver Phone</Label>

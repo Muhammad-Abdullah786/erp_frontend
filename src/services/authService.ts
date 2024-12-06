@@ -11,25 +11,54 @@ export const registerClient = async (clientData: any) => {
   }
 };
 // services/authService.ts
-export async function loginClient(credentials: {
-  email: string;
+// export async function loginClient(credentials: {
+//   email: string;
+//   password: string;
+// }) {
+//   const response = await fetch(`${url}/client/login`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(credentials),
+//   });
+
+//   if (!response.ok) {
+//     throw new Error("Login failed");
+//   }
+
+//   const data = await response.json();
+//   return data; // Assuming 'data' contains the token and other user details
+// }
+// Client login
+export const loginClient = async (credentials: {
+  username: string;
   password: string;
-}) {
-  const response = await fetch(`${url}/client/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(credentials),
-  });
+}) => {
+  const response = await axios.post(`${url}/client/login`, credentials);
+  if (response.status !== 200) throw new Error("Login failed");
+  return response.data; // Assuming response contains the token and other user details
+};
 
-  if (!response.ok) {
-    throw new Error("Login failed");
-  }
+// Admin login
+export const loginAdmin = async (credentials: {
+  username: string;
+  password: string;
+}) => {
+  const response = await axios.post(`${url}/admin/login`, credentials);
+  if (response.status !== 200) throw new Error("Login failed");
+  return response.data;
+};
 
-  const data = await response.json();
-  return data; // Assuming 'data' contains the token and other user details
-}
+// Employee login
+export const loginEmployee = async (credentials: {
+  username: string;
+  password: string;
+}) => {
+  const response = await axios.post(`${url}/employee/login`, credentials);
+  if (response.status !== 200) throw new Error("Login failed");
+  return response.data;
+};
 
 export const resetPasswordRequest = async (email: string) => {
   const response = await axios.post(`${url}/client/reset-password`, { email });

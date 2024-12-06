@@ -13,6 +13,7 @@ import { RxEyeClosed } from "react-icons/rx"; // Eye closed icon for hiding pass
 export default function RegisterPage() {
   const [formData, setFormData] = useState<any>({
     name: "",
+    username: "", // Add username here
     email: "",
     password: "",
     confirmPassword: "",
@@ -21,8 +22,8 @@ export default function RegisterPage() {
     cnicOrPassport: "",
   });
 
-  const [showPassword, setShowPassword] = useState(false); // Toggle for password visibility
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Toggle for confirm password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const router = useRouter();
 
@@ -33,12 +34,11 @@ export default function RegisterPage() {
   } = useSWRMutation(`${url}/client/register`, async (_, { arg }) => {
     try {
       const data = await registerClient(arg);
-      // Store the token in localStorage after successful registration
       if (data.token) {
-        localStorage.setItem("token", data.token); // Store token
+        localStorage.setItem("token", data.token);
       }
-      toast.success("Registration successful! Redirecting to dashboard...");
-      setTimeout(() => router.push("/home"), 1500); // Redirect to dashboard
+      toast.success("Registration successful! Redirecting to Login...");
+      setTimeout(() => router.push("/login"), 1000);
       return data;
     } catch (err) {
       toast.error("Registration failed. Please try again.");
@@ -54,6 +54,7 @@ export default function RegisterPage() {
 
     if (
       !formData.name ||
+      !formData.username || // Check if username is filled
       !formData.email ||
       !formData.password ||
       !formData.confirmPassword
@@ -83,6 +84,13 @@ export default function RegisterPage() {
           />
 
           <Input
+            name="username" // Username input field
+            placeholder="Enter your username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+
+          <Input
             name="email"
             type="email"
             placeholder="Enter your email"
@@ -103,7 +111,7 @@ export default function RegisterPage() {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute inset-y-0 right-0 pr-3 flex items-center"
             >
-              {showPassword ? <RxEyeClosed /> : <TfiEye />}
+              {showPassword ? <TfiEye />  :  <RxEyeClosed />}
             </button>
           </div>
 
@@ -120,7 +128,7 @@ export default function RegisterPage() {
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className="absolute inset-y-0 right-0 pr-3 flex items-center"
             >
-              {showConfirmPassword ? <RxEyeClosed /> : <TfiEye />}
+              {showConfirmPassword ? <TfiEye />  :  <RxEyeClosed />}
             </button>
           </div>
 

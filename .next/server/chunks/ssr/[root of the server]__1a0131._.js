@@ -5,10 +5,11 @@ module.exports = {
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: require } = __turbopack_context__;
 {
+// export const url = "https://erp-woad-pi.vercel.app/v1";
 __turbopack_esm__({
     "url": (()=>url)
 });
-const url = "https://erp-woad-pi.vercel.app/v1"; // export const url = "http://localhost:3000/v1";
+const url = "http://localhost:3000/v1";
 }}),
 "[externals]/ [external] (util, cjs)": (function(__turbopack_context__) {
 
@@ -109,6 +110,8 @@ const useStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_module
         client_secret: "",
         form_data: null,
         installment_amount: null,
+        client_container_installment_id: "",
+        client_container_id: "",
         set_payment_loading: (loading)=>set(()=>({
                     payment_loading: loading
                 })),
@@ -120,6 +123,12 @@ const useStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_module
                 })),
         save_form_data: (data)=>set(()=>({
                     form_data: data
+                })),
+        set_client_container_installment_id: (id)=>set(()=>({
+                    client_container_installment_id: id
+                })),
+        set_client_container_id: (id)=>set(()=>({
+                    client_container_id: id
                 })),
         post_container_booking: async ()=>{
             try {
@@ -133,6 +142,20 @@ const useStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_module
                 if (post_data.status === 200) {
                     console.log(post_data);
                 }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        update_installment_payment: async ()=>{
+            const { client_container_installment_id, installment_amount, client_container_id } = get();
+            try {
+                const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post("http://localhost:3000/v1/container/update_client_container_installment", {
+                    containerId: client_container_id,
+                    installmentId: client_container_installment_id,
+                    amount: installment_amount
+                });
+                console.log(response);
+                return response.data;
             } catch (error) {
                 console.log(error);
             }

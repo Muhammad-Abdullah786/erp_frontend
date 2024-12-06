@@ -134,10 +134,11 @@ Input.displayName = "Input";
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: require } = __turbopack_context__;
 {
+// export const url = "https://erp-woad-pi.vercel.app/v1";
 __turbopack_esm__({
     "url": (()=>url)
 });
-const url = "https://erp-woad-pi.vercel.app/v1";
+const url = "http://localhost:3000/v1";
 }}),
 "[externals]/ [external] (util, cjs)": (function(__turbopack_context__) {
 
@@ -226,7 +227,9 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 {
 // /src/services/authService.ts
 __turbopack_esm__({
+    "loginAdmin": (()=>loginAdmin),
     "loginClient": (()=>loginClient),
+    "loginEmployee": (()=>loginEmployee),
     "registerClient": (()=>registerClient),
     "resetPasswordRequest": (()=>resetPasswordRequest),
     "updatePasswordRequest": (()=>updatePasswordRequest)
@@ -244,20 +247,21 @@ const registerClient = async (clientData)=>{
     // throw error; // Rethrow the error so the mutation can catch it
     }
 };
-async function loginClient(credentials) {
-    const response = await fetch(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["url"]}/client/login`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(credentials)
-    });
-    if (!response.ok) {
-        throw new Error("Login failed");
-    }
-    const data = await response.json();
-    return data; // Assuming 'data' contains the token and other user details
-}
+const loginClient = async (credentials)=>{
+    const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["url"]}/client/login`, credentials);
+    if (response.status !== 200) throw new Error("Login failed");
+    return response.data; // Assuming response contains the token and other user details
+};
+const loginAdmin = async (credentials)=>{
+    const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["url"]}/admin/login`, credentials);
+    if (response.status !== 200) throw new Error("Login failed");
+    return response.data;
+};
+const loginEmployee = async (credentials)=>{
+    const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["url"]}/employee/login`, credentials);
+    if (response.status !== 200) throw new Error("Login failed");
+    return response.data;
+};
 const resetPasswordRequest = async (email)=>{
     const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["url"]}/client/reset-password`, {
         email
