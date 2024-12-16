@@ -4,11 +4,7 @@
       "static/media/GeistVF-s.p.7fe29570.woff",
       "static/media/GeistMonoVF-s.p.a9159d35.woff"
     ],
-    "[project]/src/app/register/page": [
-      "static/media/GeistVF-s.p.7fe29570.woff",
-      "static/media/GeistMonoVF-s.p.a9159d35.woff"
-    ],
-    "[project]/src/app/dashboard/page": [
+    "[project]/src/app/_not-found/page": [
       "static/media/GeistVF-s.p.7fe29570.woff",
       "static/media/GeistMonoVF-s.p.a9159d35.woff"
     ],
@@ -16,11 +12,11 @@
       "static/media/GeistVF-s.p.7fe29570.woff",
       "static/media/GeistMonoVF-s.p.a9159d35.woff"
     ],
-    "[project]/src/app/forgotPassword/page": [
+    "[project]/src/app/employee/accounts/dashboard/page": [
       "static/media/GeistVF-s.p.7fe29570.woff",
       "static/media/GeistMonoVF-s.p.a9159d35.woff"
     ],
-    "[project]/src/app/updatePassword/page": [
+    "[project]/src/app/register/page": [
       "static/media/GeistVF-s.p.7fe29570.woff",
       "static/media/GeistMonoVF-s.p.a9159d35.woff"
     ]
