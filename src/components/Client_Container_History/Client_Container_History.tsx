@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
   Table,
@@ -24,6 +24,7 @@ const Client_Container_History = () => {
   const set_client_container_installment_id = useStore((state) => state.set_client_container_installment_id);
   const set_client_container_id = useStore((state) => state.set_client_container_id);
   const set_installment_amount = useStore((state) => state.set_installment_amount);
+  const [card, setcard] = useState([]);
 
   const fetcher = async () => {
     try {
@@ -31,17 +32,19 @@ const Client_Container_History = () => {
         `${url}/container/container_client_history`,
         {
           headers: {
-            token: localStorage.getItem("token"),
+            token: localStorage.getItem("accessToken"),
           },
         }
       );
+      console.log(fetch_data);
+      setcard(fetch_data.data.data);
       return fetch_data.data.data;
     } catch (error) {
       console.log(error);
     }
   };
 
-  const client_verify = async (amount: any , container_id :  any , installment_id : any) => {
+  const client_verify = async (amount: any, container_id: any, installment_id: any) => {
     try {
       set_client_container_id(container_id);
       set_client_container_installment_id(installment_id);
@@ -70,14 +73,9 @@ const Client_Container_History = () => {
 
   return (
     <>
-      <div className="mt-6 mx-16">
-        <Button variant={"secondary"} onClick={() => router.push('/client/dashboard')}>
-          Back
-        </Button>
-      </div>
       <div className=" my-10">
         <div className="flex gap-5 justify-between flex-wrap">
-          {data?.map((e: any) => {
+          {card.map((e: any) => {
             const s = e.tracking_stages.delivered.status;
             const s_d = new Date(
               e.tracking_stages.delivered.timestamp
@@ -135,7 +133,7 @@ const Client_Container_History = () => {
                         Address : {e?.receiver_details?.address}
                       </p>
                       <p className="text-sm text-gray-600 mt-2">
-                        Phone : <span className="">{e?.receiver_details?.country_code }</span> {e?.receiver_details?.phone}
+                        Phone : <span className="">{e?.receiver_details?.country_code}</span> {e?.receiver_details?.phone}
                       </p>
                     </div>
                     <div className="mt-4">
@@ -184,7 +182,7 @@ const Client_Container_History = () => {
                                   ) : (
                                     <Button
                                       variant={"outline"}
-                                      onClick={() => client_verify(installment.amount , e._id , installment._id )}
+                                      onClick={() => client_verify(installment.amount, e._id, installment._id)}
                                       className="px-3 py-1 text-sm hover:bg-black  hover:text-white"
                                     >
                                       Pay Now

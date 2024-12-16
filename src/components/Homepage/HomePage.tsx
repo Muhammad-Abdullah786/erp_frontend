@@ -28,15 +28,7 @@ export default function HomePage() {
     router.push("/login"); // Redirect to login page
   };
 
-  // Handle Rent a Container Now button click
-  const handleRentContainerClick = () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setShowAuthModal(true); // Show signup/login modal if no token found
-    } else {
-      setShowBookingForm(true); // Proceed to booking if token exists
-    }
-  };
+
 
   const services = [
     {
@@ -95,6 +87,22 @@ export default function HomePage() {
                   <Button onClick={() => setIsDialogOpen(true)}>Logout</Button>
                 )}
               </div>
+              <section id="rent" className= "rounded-lg my-10 py-16 bg-blue-50">
+            <div className="container mx-auto text-center">
+              <h2 className="text-3xl font-bold mb-4">Ready to Ship?</h2>
+              <p className="text-xl mb-8">
+                Rent our containers and start moving your goods across the globe
+                today.
+              </p>
+              <Link
+              href={"/containerBooking"}
+              
+                className="font-semibold p-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-300"
+              >
+                Rent a Container Now
+              </Link>
+            </div>
+          </section>
               <div className="space-y-12">
                 {services.map((service, index) => (
                   <div
@@ -152,22 +160,7 @@ export default function HomePage() {
             </div>
           </section>
 
-          <section id="rent" className="py-16 bg-blue-50">
-            <div className="container mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-4">Ready to Ship?</h2>
-              <p className="text-xl mb-8">
-                Rent our containers and start moving your goods across the globe
-                today.
-              </p>
-              <Button
-                size="lg"
-                onClick={handleRentContainerClick}
-                className="font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-300"
-              >
-                Rent a Container Now
-              </Button>
-            </div>
-          </section>
+         
         </div>
       )}
 
@@ -187,24 +180,7 @@ export default function HomePage() {
         </DialogContent>
       </Dialog>
 
-      {/* Signup/Login Modal */}
-      <Dialog open={showAuthModal} onOpenChange={setShowAuthModal}>
-        <DialogContent>
-          <DialogHeader className="font-bold text-lg">Authentication Required</DialogHeader>
-          <p>You need to sign up or log in to continue with the booking.</p>
-          <DialogFooter>
-            <Button onClick={() => router.push("/register")} className="bg-green-500">
-              Sign Up
-            </Button>
-            <Button onClick={() => router.push("/login")} className="bg-blue-500">
-              Log In
-            </Button>
-            <Button variant="secondary" className="bg-gray-300" onClick={() => setShowAuthModal(false)}>
-              Cancel
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+    
     </div>
   );
 }

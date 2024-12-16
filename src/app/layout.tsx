@@ -3,8 +3,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Make sure you import the required CSS for the toast
-
-
+import Navbar from "@/components/Navbar";
+import Footer from '@/components/Footer'
+import CodeWrapper from "@/components/CodeWrapper/CodeWrapper";
 // Font imports
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,16 +28,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Create QueryClient inside the component to ensure it is client-side only
-
+  
+ 
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+ 
+        <CodeWrapper>
+        <Navbar/>
           {children}
           <ToastContainer /> {/* Make sure this is present */}
-
+<Footer/>
+</CodeWrapper>
       </body>
     </html>
   );

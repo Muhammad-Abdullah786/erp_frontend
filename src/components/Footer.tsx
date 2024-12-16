@@ -2,7 +2,7 @@
 
 export default function Footer() {
     return (
-      <footer className="bg-gray-800 text-white p-6 mt-12">
+      <footer className="bg-gray-800 text-white p-6">
         <div className="container mx-auto text-center">
           <p>&copy; 2024 LogisticsCo. All rights reserved.</p>
           <ul className="flex justify-center space-x-6 mt-4">

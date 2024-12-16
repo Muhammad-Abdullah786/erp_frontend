@@ -94,7 +94,7 @@ const Payment = () => {
       set_payment_success_loading(false);
       set_payment_loading(false);
       set_installment_amount(null);
-      router.push("/containers_details");
+      router.push("/login");
     }
   };
 

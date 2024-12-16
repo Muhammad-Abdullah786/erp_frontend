@@ -1,11 +1,21 @@
 "use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link'; // Import Link from Next.js
-import { useRouter } from 'next/navigation'; // For redirecting to login
-import '../app/globals.css';
+import React, { useState } from "react";
+import Link from "next/link"; // Import Link from Next.js
+import { useRouter } from "next/navigation"; // For redirecting to login
+import "../app/globals.css";
 
-const AdminNavbar: React.FC = () => {
+interface MenuItem {
+  label: string;
+  href: string;
+}
+
+interface AdminNavbarProps {
+  title: string;
+  menuItems: MenuItem[];
+}
+
+const AdminNavbar: React.FC<AdminNavbarProps> = ({ title, menuItems }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false); // State to show the confirmation dialog
   const router = useRouter();
@@ -16,9 +26,9 @@ const AdminNavbar: React.FC = () => {
 
   const handleLogout = () => {
     // Remove token from localStorage
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     // Redirect to login page
-    router.push('/login');
+    router.push("/login");
   };
 
   return (
@@ -49,7 +59,7 @@ const AdminNavbar: React.FC = () => {
         </div>
 
         <div className="text-xl font-semibold text-gray-800">
-          <Link href="#">Admin Panel</Link>
+          <Link href="#">{title}</Link>
         </div>
 
         <div className="flex items-center space-x-4">
@@ -94,11 +104,16 @@ const AdminNavbar: React.FC = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 w-64 bg-gray-200 shadow-lg transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out z-50`}
+        className={`fixed inset-y-0 left-0 w-64 bg-gray-200 shadow-lg transform ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300 ease-in-out z-50`}
       >
         <div className="flex justify-between items-center bg-gray-300 px-4 py-3 shadow-md">
           <h2 className="text-xl font-semibold">Menu</h2>
-          <button onClick={toggleSidebar} className="text-gray-600 focus:outline-none">
+          <button
+            onClick={toggleSidebar}
+            className="text-gray-600 focus:outline-none"
+          >
             {/* Close Icon */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -118,14 +133,19 @@ const AdminNavbar: React.FC = () => {
         </div>
 
         <ul className="p-4 space-y-4">
-          <li className="px-4 py-2 hover:bg-gray-300 rounded-lg cursor-pointer">
-            <Link href="/employeeRegister">Add Employees</Link>
-          </li>
-          <li className="px-4 py-2 hover:bg-gray-300 rounded-lg cursor-pointer">
-            <Link href="/GetEmployee">Employees List</Link>
-          </li>
+          {menuItems.map((item, index) => (
+            <li
+              key={index}
+              className="px-4 py-2 hover:bg-gray-300 rounded-lg cursor-pointer"
+            >
+              <Link href={item.href}>{item.label}</Link>
+            </li>
+          ))}
           {/* Logout Button */}
-          <li className="px-4 py-2 hover:bg-gray-300 rounded-lg cursor-pointer" onClick={() => setShowLogoutDialog(true)}>
+          <li
+            className="px-4 py-2 hover:bg-gray-300 rounded-lg cursor-pointer"
+            onClick={() => setShowLogoutDialog(true)}
+          >
             Logout
           </li>
         </ul>
@@ -143,7 +163,9 @@ const AdminNavbar: React.FC = () => {
       {showLogoutDialog && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-lg font-semibold mb-4">Are you sure you want to log out?</h3>
+            <h3 className="text-lg font-semibold mb-4">
+              Are you sure you want to log out?
+            </h3>
             <div className="flex space-x-4">
               <button
                 className="px-4 py-2 bg-green-500 text-white rounded-lg"

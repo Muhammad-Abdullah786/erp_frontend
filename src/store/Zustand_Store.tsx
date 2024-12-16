@@ -9,6 +9,8 @@ const useStore = create<any>((set : any , get: any) => ({
   installment_amount : null,
   client_container_installment_id : "",
   client_container_id : "",
+  tracking_id : "",
+  set_tracking_id : (trace_id : any) => set(() => ({tracking_id : trace_id})),
   set_payment_loading : (loading : any) => set(() => ({ payment_loading : loading })),  // Loading state for payment process
   set_client_secret : (client_id : any) => set(() => ({ client_secret : client_id })),
   set_installment_amount : (amount : any) => set(() => ({installment_amount : amount})), 

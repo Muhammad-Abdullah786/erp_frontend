@@ -2,7 +2,7 @@ import React from 'react'
 import GetEmployees from '@/components/GetEmployees'
 const page = () => {
   return (
-    <div>
+    <div>   
         
         <GetEmployees/>
     </div>

@@ -1,10 +1,18 @@
 import React from "react";
-import Navbar from "./Navbar";
 import GetEmployees from "@/components/GetEmployees";
+import AdminNavbar from "@/components/AdminNavbar";
 const page = () => {
   return (
     <div>
-      <Navbar />
+<AdminNavbar 
+title="HR"
+menuItems={[
+  { label: "Order Tracking", href: "" },
+  { label: "Order Details", href: "/Orders" },
+  { label: "Booked container", href: "/containerBooking" },
+  
+]}/>
+
       <GetEmployees />
     </div>
   );

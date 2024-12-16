@@ -1,11 +1,8 @@
-
-
 "use client";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { url } from "@/apiURL";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -19,63 +16,45 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import axios from "axios";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { url } from "@/apiURL";
 import useStore from "@/store/Zustand_Store";
-// Define the form data type
+
 type FormValues = {
   container_type: string;
   weight: number;
   containers: { size: string; quantity: number }[];
   price: number;
   handling_type: string;
-  installments: any;
-  installment_period : any ;
-  installmentDetails: { installment_number: any; amount: any; status: any }[];
+  installments: string;
+  installment_period: number;
+  installmentDetails: {
+    installment_number: number;
+    amount: number;
+    status: string;
+  }[];
+  sender_details: {
+    name: string;
+    email: string;
+    phone: string;
+  };
   receiver_details: {
     name: string;
     address: string;
-    country_code : string;
+    country_code: string;
     phone: string;
   };
 };
-
-
 const Container_Book = () => {
-   
-
-  const [codes, setCodes] = useState([]);
-
-  useEffect(() => {
-    async function fetchCountryCodes() {
-      const response = await fetch("https://restcountries.com/v3.1/all");
-      const countries = await response.json();
-      const countryData = countries.map((country : any) => ({
-        name: country.name.common,
-        code: country.cca2,
-        callingCode: country.idd.root + (country.idd.suffixes ? country.idd.suffixes[0] : ""),
-      }));
-      setCodes(countryData);
-    }
-
-    fetchCountryCodes();
-  }, []);
+  const [step, setStep] = useState(1); // Track the step
 
   const set_client_secret = useStore((state) => state.set_client_secret);
+
   const save_form_data = useStore((state) => state.save_form_data);
-  const payment_loading = useStore((state) => state.payment_loading);
   const set_payment_loading = useStore((state) => state.set_payment_loading);
+  const payment_loading = useStore((state) => state.payment_loading);
   const set_installment_amount = useStore(
     (state) => state.set_installment_amount
   );
-
   const router = useRouter();
 
   const {
@@ -87,54 +66,48 @@ const Container_Book = () => {
     watch,
   } = useForm<FormValues>();
 
-  const weight = watch("weight"); // Watch the weight field for changes
-  const price = watch("price"); // Watch price field dynamically
-  const installments: any = watch("installments"); // Watch installments value
-  const installment_period: any = watch("installment_period"); // Watch installment_period value
-  console.log(installment_period);
+  const weight = watch("weight");
+  const price = watch("price");
+  const installments = watch("installments");
+  const installment_period = watch("installment_period");
 
   useEffect(() => {
     if (weight) {
       const containerDetails: { size: string; quantity: number }[] = [];
-      let remainingWeight = weight; // User input ka weight
+      let remainingWeight = weight;
       let totalPrice = 0;
 
-      // Container prices
-      const price20 = 1000; // Price of 20 feet container
-      const price40 = 2000; // Price of 40 feet container
+      const price20 = 1000;
+      const price40 = 2000;
 
-      // Step 1: Use 40-feet containers for maximum capacity
       if (remainingWeight >= 4) {
-        const quantity40 = Math.floor(remainingWeight / 4); // 40-feet containers required
+        const quantity40 = Math.floor(remainingWeight / 4);
         containerDetails.push({ size: "40 feet", quantity: quantity40 });
-        totalPrice += quantity40 * price40; // Update price
-        remainingWeight -= quantity40 * 4; // Subtract weight handled by 40-feet containers
+        totalPrice += quantity40 * price40;
+        remainingWeight -= quantity40 * 4;
       }
 
-      // Step 2: Use 20-feet containers for remaining weight
       if (remainingWeight > 0) {
-        const quantity20 = Math.ceil(remainingWeight / 2); // 20-feet containers required
+        const quantity20 = Math.ceil(remainingWeight / 2);
         containerDetails.push({ size: "20 feet", quantity: quantity20 });
-        totalPrice += quantity20 * price20; // Update price
-        remainingWeight -= quantity20 * 2; // Subtract weight handled by 20-feet containers
+        totalPrice += quantity20 * price20;
+        remainingWeight -= quantity20 * 2;
       }
 
-      // Step 3: Installments Calculation
       const installmentDetails: {
-        installment_number: any;
-        amount: any;
-        status: any;
+        installment_number: number;
+        amount: number;
+        status: string;
       }[] = [];
       for (let i = 1; i <= installment_period; i++) {
         installmentDetails.push({
           installment_number: i,
-          amount: parseFloat((totalPrice / installment_period).toFixed(2)), // Divide equally and round to 2 decimal places
+          amount: parseFloat((totalPrice / installment_period).toFixed(2)),
           status: i === 1 ? "paid" : "pending",
         });
       }
 
       setValue("installmentDetails", installmentDetails);
-      // Step 3: Update form fields
       setValue("containers", containerDetails);
       setValue("price", totalPrice);
     } else {
@@ -146,9 +119,9 @@ const Container_Book = () => {
 
   useEffect(() => {
     if (installments === "full_payment") {
-      setValue("installment_period", 1); // Set default to 1 for full payment
+      setValue("installment_period", 1);
     }
-  }, [installments, setValue]); // Dependency to trigger when "installments" changes
+  }, [installments, setValue]);
 
   const client_verify = async () => {
     set_installment_amount(watch("installmentDetails")?.[0].amount);
@@ -166,318 +139,244 @@ const Container_Book = () => {
       }
     } catch (error) {
       console.log(error);
-   
+
       toast.info(
         ` Client ID : Generated \n ${new Date().toLocaleDateString()}`
       );
     }
   };
 
-  const onsubmit = (data: any) => {
-    console.log(data);
+  const onsubmit = async (data: any) => {
     set_payment_loading(true);
     save_form_data(data);
     client_verify();
+
+    console.log(data);
+
+    try {
+      // Send the request directly to book the container without authentication
+      const response = await axios.post(
+        `${url}/container/booked_container`,
+        data ,
+        {
+          headers: {
+            token: localStorage.getItem("accessToken"),
+          },
+        }
+      );
+      if (response.status === 200) {
+        toast.success("Container Booking Successfully Saved");
+        router.push("/payment"); // Navigate to the payment page
+      }
+    } catch (error) {
+      toast.error("Failed to book container");
+      console.error(error);
+    } finally {
+      set_payment_loading(false);
+    }
   };
 
+  const handleNext = () => setStep(step + 1);
+  const handlePrev = () => setStep(step - 1);
+
   return (
-    <>
-      <div className="max-w-2xl mx-auto py-10">
-        <Card>
-          <CardHeader>
-            <CardTitle>Container Booking Form</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form className="space-y-4" onSubmit={handleSubmit(onsubmit)}>
-              {/* Container Type */}
-              <div>
-                <Label htmlFor="container_type">Container Type</Label>
-                <Select
-                  onValueChange={(value) => setValue("container_type", value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Container Type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Refrigerated">Refrigerated</SelectItem>
-                    <SelectItem value="Dry">Dry</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Weight */}
-              <div>
-                <Label htmlFor="weight">Weight (tons)</Label>
-                <Input
-                  id="weight"
-                  type="number"
-                  step="0.1"
-                  placeholder="Enter weight"
-                  {...register("weight", {
-                    required: "Weight is required",
-                    min: {
-                      value: 0.1,
-                      message: "Weight must be at least 0.1 tons",
-                    },
-                  })}
-                />
-                {errors.weight && (
-                  <p className="text-red-500 text-sm">
-                    {errors.weight.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Containers */}
-              <div>
-                <div className="space-y-2">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="">Size</TableHead>
-                        <TableHead>Quantity</TableHead>
-                        <TableHead className="text-left">Price</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {watch("containers")?.map((container, index) => (
-                        <TableRow key={index}>
-                          <TableCell className="font-medium">
-                            {container.size}
-                          </TableCell>
-                          <TableCell>{container.quantity}</TableCell>
-                          <TableCell>
-                            {container.size === "20 feet"
-                              ? container.quantity * 1000
-                              : container.quantity * 2000}
-                            $
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                    <TableFooter>
-                      <TableRow>
-                        <TableCell colSpan={3}>Total</TableCell>
-                        <TableCell className="text-right">
-                          {" "}
-                          {watch("containers")?.reduce(
-                            (total, container) =>
-                              total +
-                              (container.size === "20 feet"
-                                ? container.quantity * 1000
-                                : container.quantity * 2000),
-                            0
-                          )}
-                          $
-                        </TableCell>
-                      </TableRow>
-                    </TableFooter>
-                  </Table>
-                </div>
-              </div>
-
-              {/* Price*/}
-              <div>
-                <Label htmlFor="price">Price (USD)</Label>
-                <Input
-                  readOnly
-                  id="price"
-                  type="number"
-                  placeholder="Enter weight"
-                  {...register("price")}
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="handling_type">Handling Type</Label>
-                <Select
-                  onValueChange={(value) => setValue("handling_type", value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Handling Type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Employee">
-                      Employee (Material Checked)
-                    </SelectItem>
-                    <SelectItem value="Anonymous">
-                      Anonymous (No Guarantee)
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                {errors.handling_type && (
-                  <p className="text-red-500 text-sm">
-                    {errors.handling_type.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <Label htmlFor="installments">Installments</Label>
-                <Select
-                  onValueChange={(value) =>
-                    setValue("installments", value)
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Installments" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="full_payment">Full Payment</SelectItem>
-                    <SelectItem value="installment">Installments</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-          
-              {installments == 'installment' && (
-                
-                 <>
-                 
-                       <div>
-                <Label htmlFor="installments_period">Installments Period</Label>
-                <Select
-                  onValueChange={(value) =>
-                    setValue("installment_period", parseInt(value))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Installments Period" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="3">3 months</SelectItem>
-                    <SelectItem value="6">6 months</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div> 
-                 </>
-              )}
-
+    <div className="max-w-2xl mx-auto py-10">
+      <Card>
+        <CardHeader>
+          <CardTitle>Container Booking Form</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form className="space-y-4" onSubmit={handleSubmit(onsubmit)}>
+            {/* Step 1: Container Information */}
+            {step === 1 && (
               <div>
                 <div>
-                  <div className="space-y-2">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Installement</TableHead>
-                          <TableHead>Amount</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {watch("installmentDetails")?.map((e: any) => {
-                          return (
-                            <>
-                              <TableRow key={e.installment_number}>
-                                <TableCell className="font-medium">
-                                  {e.installment_number}
-                                </TableCell>
-                                <TableCell>{e.amount}$</TableCell>
-                              </TableRow>
-                            </>
-                          );
-                        })}
-                      </TableBody>
-                    </Table>
-                  </div>
+                  <Label htmlFor="container_type">Container Type</Label>
+                  <Select
+                    onValueChange={(value) => setValue("container_type", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Container Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Refrigerated">Refrigerated</SelectItem>
+                      <SelectItem value="Dry">Dry</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
-              </div>
 
-              {/* Receiver Details */}
-              <h3 className="text-lg font-medium">Receiver Details</h3>
-              <div>
-                <Label htmlFor="receiver_name">Receiver Name</Label>
-                <Input
-                  id="receiver_name"
-                  type="text"
-                  placeholder="Receiver's Name"
-                  {...register("receiver_details.name", {
-                    required: "Receiver name is required",
-                  })}
-                />
-                {errors.receiver_details?.name && (
-                  <p className="text-red-500 text-sm">
-                    {errors.receiver_details.name.message}
-                  </p>
-                )}
-              </div>
+                <div>
+                  <Label htmlFor="weight">Weight (tons)</Label>
+                  <Input
+                    id="weight"
+                    type="number"
+                    step="0.1"
+                    placeholder="Enter weight"
+                    {...register("weight", {
+                      required: "Weight is required",
+                      min: {
+                        value: 0.1,
+                        message: "Weight must be at least 0.1 tons",
+                      },
+                    })}
+                  />
+                  {errors.weight && (
+                    <p className="text-red-500 text-sm">
+                      {errors.weight.message}
+                    </p>
+                  )}
+                </div>
 
-              <div>
-                <Label htmlFor="receiver_address">Receiver Address</Label>
-                <Input
-                  id="receiver_address"
-                  type="text"
-                  placeholder="Receiver's Address"
-                  {...register("receiver_details.address", {
-                    required: "Receiver address is required",
-                  })}
-                />
-                {errors.receiver_details?.address && (
-                  <p className="text-red-500 text-sm">
-                    {errors.receiver_details.address.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-        <Label htmlFor="country_code" className="font-semibold">Country Code: </Label>
-        <select
-          id="country_code"
-          {...register("receiver_details.country_code", {
-            required: "Country code is required",
-          })}
-          className="border p-2 rounded"
-        >
-          <option value="">Select Country Code</option>
-          {codes.map(({ code, callingCode, name }) => (
-            <option key={code} value={callingCode}>
-              {name} ({callingCode})
-            </option>
-          ))}
-        </select>
-        {errors.receiver_details?.country_code && (
-          <p className="text-red-500 text-sm">
-            {errors.receiver_details.country_code.message}
-          </p>
-        )}
-      </div>
-
-              <div>
-                <Label htmlFor="receiver_phone">Receiver Phone</Label>
-                <Input
-                  id="receiver_phone"
-                  type="tel"
-                  placeholder="Receiver's Phone"
-                  {...register("receiver_details.phone", {
-                    required: "Receiver phone is required",
-                    pattern: {
-                      value: /^[0-9]{10}$/,
-                      message: "Enter a valid 10-digit phone number",
-                    },
-                  })}
-                />
-                {errors.receiver_details?.phone && (
-                  <p className="text-red-500 text-sm">
-                    {errors.receiver_details.phone.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Submit Button */}
-              {payment_loading ? (
-                <Button disabled className="w-full">
-                  <Loader2 className="animate-spin" />
-                  Please wait
+                <Button type="button" onClick={handleNext}>
+                  Next
                 </Button>
-              ) : (
-                <Button type="submit" className="w-full">
-                  Payment Method
+              </div>
+            )}
+
+            {/* Step 2: Sender Information */}
+            {step === 2 && (
+              <div>
+                <div>
+                  <Label htmlFor="sender_details.name">Sender Name</Label>
+                  <Input
+                    id="sender_details.name"
+                    placeholder="Sender's Name"
+                    {...register("sender_details.name", {
+                      required: "Sender's name is required",
+                    })}
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="sender_details.email">Sender Email</Label>
+                  <Input
+                    id="sender_details.email"
+                    placeholder="Sender's Email"
+                    type="email"
+                    {...register("sender_details.email", {
+                      required: "Sender's email is required",
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                        message: "Invalid email address",
+                      },
+                    })}
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="sender_details.phone">Sender Phone</Label>
+                  <Input
+                    id="sender_details.phone"
+                    placeholder="Sender's Phone"
+                    type="tel"
+                    {...register("sender_details.phone", {
+                      required: "Sender's phone is required",
+                    })}
+                  />
+                </div>
+
+                <Button type="button" onClick={handlePrev}>
+                  Previous
                 </Button>
-              )}
-            </form>
-          </CardContent>
-        </Card>
-      </div>
-    </>
+                <Button type="button" onClick={handleNext}>
+                  Next
+                </Button>
+              </div>
+            )}
+
+            {/* Step 3: Receiver Information */}
+            {step === 3 && (
+              <div>
+                <div>
+                  <Label>Receiver Details</Label>
+                  <Input
+                    placeholder="Name"
+                    {...register("receiver_details.name", {
+                      required: "Receiver's name is required",
+                    })}
+                  />
+                  <Input
+                    placeholder="Address"
+                    {...register("receiver_details.address", {
+                      required: "Receiver's address is required",
+                    })}
+                  />
+                  <Select
+                    value={watch("receiver_details.country_code")}
+                    onValueChange={(code) =>
+                      setValue("receiver_details.country_code", code)
+                    }
+                  ></Select>
+                  <Input
+                    placeholder="Phone Number"
+                    {...register("receiver_details.phone", {
+                      required: "Phone number is required",
+                    })}
+                  />
+                </div>
+
+                <Button type="button" onClick={handlePrev}>
+                  Previous
+                </Button>
+                <Button type="button" onClick={handleNext}>
+                  Next
+                </Button>
+              </div>
+            )}
+
+            {/* Step 4: Payment and Installment */}
+            {step === 4 && (
+              <div>
+                <div>
+                  <Label htmlFor="installments">Installments</Label>
+                  <Select
+                    onValueChange={(value) => setValue("installments", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Installment Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="full_payment">Full Payment</SelectItem>
+                      <SelectItem value="installments">Installments</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  {installments === "installments" && (
+                    <>
+                      <Label htmlFor="installment_period">
+                        Installment Period (months)
+                      </Label>
+                      <Input
+                        type="number"
+                        placeholder="Enter number of months"
+                        {...register("installment_period", {
+                          required: "Installment period is required",
+                          min: 1,
+                        })}
+                      />
+                    </>
+                  )}
+                </div>
+
+                <Button type="button" onClick={handlePrev}>
+                  Previous
+                </Button>
+                <Button type="submit" disabled={payment_loading}>
+                  {payment_loading ? (
+                    <Loader2 className="animate-spin" />
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
+              </div>
+            )}
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 

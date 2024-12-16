@@ -1,13 +1,16 @@
-import React from 'react'
-import Orders from '@/components/Orders'
-import Navbar from './Navbar'
+import React from "react";
+import Orders from "@/components/Orders";
+import AdminNavbar from "@/components/AdminNavbar";
 const page = () => {
   return (
     <div>
-<Navbar/>
-    <Orders/>
+      <AdminNavbar
+        title="Sales"
+        menuItems={[{ label: "Marketing", href: "" }]}
+      />
+      <Orders />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
