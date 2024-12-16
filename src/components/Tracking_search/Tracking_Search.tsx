@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import useStore from '@/store/Zustand_Store'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { url } from '@/apiURL'
 const Tracking_Search = () => {
 
   const router = useRouter();
@@ -26,7 +27,7 @@ const Tracking_Search = () => {
     }
     console.log(search)
     try {
-      const response = await axios.post(`http://localhost:3000/v1/container/tracking_container`, {
+      const response = await axios.post(`${url}/container/tracking_container`, {
         tracking_id: search,
       });
       if (response.status !== 200) {
