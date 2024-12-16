@@ -26,7 +26,7 @@ const Tracking_Search = () => {
     }
     console.log(search)
     try {
-      const response = await axios.post(`http://localhost:3000/v1/container/tracking_container`, {
+      const response = await axios.post(`${url}/container/tracking_container`, {
         tracking_id: search,
       });
       if (response.status !== 200) {
