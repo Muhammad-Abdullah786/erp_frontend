@@ -16,13 +16,12 @@ DefaultIcon.mergeOptions({
 
 const Tracking_container = () => {
 
-  const tracking_id = useStore((state) => state.tracking_id )
-
+  const tracking_id = useStore((state) => state.tracking_id );
   const [location, setLocation] = useState({ lat: 37.7749, lng: -122.4194, speed: 0 });
 
   const get_devices_location = async () => {
     try {
-      const response = await axios.get(`https://flespi.io/gw/devices/${tracking_id}/messages`,
+      const response = await axios.get(`https://flespi.io/gw/devices/${localStorage.getItem('tracking_id')}/messages`,
         {
           headers: {
             Authorization: `FlespiToken o2fTkbO5RlrtKDlID7bc6sIibkyXQnqaNT5Br1Xtlb3Ufis06SIDE0weYKY6Dh8A`
@@ -50,7 +49,7 @@ const Tracking_container = () => {
           altitude: 150,
         },
       ];
-      const response = await axios.post(`https://flespi.io/gw/devices/6112954/messages`, data,
+      const response = await axios.post(`https://flespi.io/gw/devices/${localStorage.getItem('tracking_id')}/messages`, data,
         {
           headers: {
             Authorization: `FlespiToken o2fTkbO5RlrtKDlID7bc6sIibkyXQnqaNT5Br1Xtlb3Ufis06SIDE0weYKY6Dh8A`
@@ -74,6 +73,7 @@ const Tracking_container = () => {
     }
     return () => {
       localStorage.removeItem("isReloaded");
+      localStorage.removeItem("tracking_id")
     }
   }, []);
 
@@ -108,17 +108,6 @@ const Tracking_container = () => {
       clearInterval(interval); // Cleanup interval
     } 
 
-   
-    // const interval = setInterval(() => {
-    //   setLocation((prev) => ({
-    //     lat: prev.lat + (Math.random() - 0.5)  * 0.0001,
-    //     lng: prev.lng + (Math.random() - 0.5)  * 0.0001,
-    //     speed : Math.floor(Math.random() * 100)
-    //   }));
-    // }, 2000);
-    // return () => {
-    //   clearInterval(interval); // Cleanup interval
-    // } 
   }, []);
 
   return (

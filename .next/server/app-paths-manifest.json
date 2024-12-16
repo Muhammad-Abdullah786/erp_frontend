@@ -1,7 +1,12 @@
 {
   "/page": "app/page.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/login/page": "app/login/page.js",
-  "/employee/accounts/dashboard/page": "app/employee/accounts/dashboard/page.js",
-  "/register/page": "app/register/page.js"
+  "/user/dashboard/page": "app/user/dashboard/page.js",
+  "/containerBooking/page": "app/containerBooking/page.js",
+  "/payment/page": "app/payment/page.js",
+  "/search_tracking/page": "app/search_tracking/page.js",
+  "/tracking/page": "app/tracking/page.js",
+  "/containers_details/page": "app/containers_details/page.js"
 }
