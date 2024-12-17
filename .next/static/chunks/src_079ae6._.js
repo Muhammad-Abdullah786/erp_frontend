@@ -5,7 +5,14 @@
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: require } = __turbopack_context__;
 {
-// export const url = "https://erp-woad-pi.vercel.app/v1";
+// export const url = "https://back-mu-olive.vercel.app/v1"; // for main
+// export const url =
+<<<<<<< HEAD
+//   "https://erp-frontend-git-dev-muhammad-abdullah786s-projects.vercel.app/v1"; // this is for devevlop branch
+=======
+//   "https://erp-frontend-git-dev-muhammad-abdullah786s-projects.vercel.app/v1"; 
+// // this is for devevlop branch
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
 __turbopack_esm__({
     "url": (()=>url)
 });
@@ -35,6 +42,10 @@ const useStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_module
         installment_amount: null,
         client_container_installment_id: "",
         client_container_id: "",
+        tracking_id: "",
+        set_tracking_id: (trace_id)=>set(()=>({
+                    tracking_id: trace_id
+                })),
         set_payment_loading: (loading)=>set(()=>({
                     payment_loading: loading
                 })),
@@ -57,11 +68,7 @@ const useStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_module
             try {
                 const form_data = get().form_data;
                 console.log(form_data);
-                const post_data = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["url"]}/container/booked_container`, form_data, {
-                    headers: {
-                        token: localStorage.getItem('token')
-                    }
-                });
+                const post_data = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["url"]}/container/booked_container`, form_data);
                 if (post_data.status === 200) {
                     console.log(post_data);
                 }
@@ -72,13 +79,12 @@ const useStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_module
         update_installment_payment: async ()=>{
             const { client_container_installment_id, installment_amount, client_container_id } = get();
             try {
-                const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("http://localhost:3000/v1/container/update_client_container_installment", {
+                const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$apiURL$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["url"]}/container/update_client_container_installment`, {
                     containerId: client_container_id,
                     installmentId: client_container_installment_id,
                     amount: installment_amount
                 });
                 console.log(response);
-                return response.data;
             } catch (error) {
                 console.log(error);
             }
@@ -354,13 +360,13 @@ const Payment = ()=>{
     const elements = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$stripe$2f$react$2d$stripe$2d$js$2f$dist$2f$react$2d$stripe$2e$umd$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useElements"])();
     const client_secret = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])({
         "Payment.useStore[client_secret]": (state)=>state.client_secret
-    }["Payment.useStore[client_secret]"]); // Retrieve client_secret from Zustand
+    }["Payment.useStore[client_secret]"]);
     const post_container_booking = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])({
         "Payment.useStore[post_container_booking]": (state)=>state.post_container_booking
-    }["Payment.useStore[post_container_booking]"]); // Retrieve post_container_
+    }["Payment.useStore[post_container_booking]"]);
     const set_payment_loading = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])({
         "Payment.useStore[set_payment_loading]": (state)=>state.set_payment_loading
-    }["Payment.useStore[set_payment_loading]"]); //
+    }["Payment.useStore[set_payment_loading]"]);
     const set_client_secret = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])({
         "Payment.useStore[set_client_secret]": (state)=>state.set_client_secret
     }["Payment.useStore[set_client_secret]"]);
@@ -370,17 +376,27 @@ const Payment = ()=>{
     const set_installment_amount = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])({
         "Payment.useStore[set_installment_amount]": (state)=>state.set_installment_amount
     }["Payment.useStore[set_installment_amount]"]);
+    const client_container_installment_id = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])({
+        "Payment.useStore[client_container_installment_id]": (state)=>state.client_container_installment_id
+    }["Payment.useStore[client_container_installment_id]"]);
+    const client_container_id = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])({
+        "Payment.useStore[client_container_id]": (state)=>state.client_container_id
+    }["Payment.useStore[client_container_id]"]);
+    const update_installment_payment = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])({
+        "Payment.useStore[update_installment_payment]": (state)=>state.update_installment_payment
+    }["Payment.useStore[update_installment_payment]"]);
+    const set_client_container_installment_id = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])({
+        "Payment.useStore[set_client_container_installment_id]": (state)=>state.set_client_container_installment_id
+    }["Payment.useStore[set_client_container_installment_id]"]);
+    const set_client_container_id = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])({
+        "Payment.useStore[set_client_container_id]": (state)=>state.set_client_container_id
+    }["Payment.useStore[set_client_container_id]"]);
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const handleSubmit = async (e)=>{
         set_payment_success_loading(true);
         e.preventDefault();
         if (!stripe || !elements || !client_secret) {
             console.error("Stripe or Elements not loaded, or client_secret is missing");
-            // toast({
-            //   title: "Error",
-            //   description:
-            //     "Stripe or Elements not loaded, or client_secret is missing.",
-            // });
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$react$2d$toastify$2e$esm$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error(`Payment Failed! Please try Again  ${new Date().toLocaleDateString()} \n Maybe Stripe or Elements not loaded, or client_secret is missing.`);
             set_payment_success_loading(false);
             return;
@@ -388,10 +404,6 @@ const Payment = ()=>{
         const cardElement = elements.getElement(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$stripe$2f$react$2d$stripe$2d$js$2f$dist$2f$react$2d$stripe$2e$umd$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardElement"]);
         if (!cardElement) {
             console.error("Card element is not loaded.");
-            // toast({
-            //   title: "Error",
-            //   description: "Card element is not loaded. Please try again.",
-            // });
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$react$2d$toastify$2e$esm$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error(`Payment Failed! Please try Again  ${new Date().toLocaleDateString()} \n Maybe Card element is not loaded.`);
             set_payment_success_loading(false);
             return;
@@ -402,25 +414,37 @@ const Payment = ()=>{
             }
         });
         if (error) {
-            // toast({
-            //   title: "Payment Failed",
-            //   description: error.message || "Something went wrong with the payment.",
-            // });
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$react$2d$toastify$2e$esm$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error(`Payment Failed! Please try Again  ${new Date().toLocaleDateString()} \n ${error.message || "Something went wrong with the payment."}`);
             set_payment_success_loading(false);
             set_payment_loading(false);
         } else if (paymentIntent) {
+<<<<<<< HEAD
             await post_container_booking();
-            // toast({
-            //   title: "Payment Successful & Your Container Booked",
-            //   description: `Payment processed successfully on ${new Date().toLocaleDateString()}`,
-            // });
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$react$2d$toastify$2e$esm$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success(`Payment Successful & Your Container Booked on ${new Date().toLocaleDateString()}`);
             set_client_secret("");
             set_payment_success_loading(false);
             set_payment_loading(false);
             set_installment_amount(null);
-            router.push("/containers_details");
+            router.push("/login");
+=======
+            if (client_container_installment_id && client_container_id && installment_amount) {
+                await update_installment_payment();
+                set_client_secret("");
+                set_client_container_installment_id(null);
+                set_client_container_id(null);
+                set_installment_amount(null);
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$react$2d$toastify$2e$esm$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success(`Installment is Paid in  ${new Date().toLocaleDateString()}`);
+                return;
+            } else {
+                await post_container_booking();
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$toastify$2f$dist$2f$react$2d$toastify$2e$esm$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success(`Payment Successful & Your Container Booked on ${new Date().toLocaleDateString()}`);
+                set_client_secret("");
+                set_payment_success_loading(false);
+                set_payment_loading(false);
+                set_installment_amount(null);
+                router.push("/login");
+            }
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -433,7 +457,11 @@ const Payment = ()=>{
                     children: "Enter Card Details"
                 }, void 0, false, {
                     fileName: "[project]/src/components/Payment/Payment.tsx",
-                    lineNumber: 104,
+<<<<<<< HEAD
+                    lineNumber: 97,
+=======
+                    lineNumber: 109,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -450,14 +478,22 @@ const Payment = ()=>{
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Payment/Payment.tsx",
-                            lineNumber: 110,
+<<<<<<< HEAD
+                            lineNumber: 103,
+=======
+                            lineNumber: 115,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                             columnNumber: 11
                         }, this),
                         ". Click the button below to make your payment securely and hassle-free. We appreciate your trust and look forward to serving you!"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Payment/Payment.tsx",
-                    lineNumber: 107,
+<<<<<<< HEAD
+                    lineNumber: 100,
+=======
+                    lineNumber: 112,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -472,7 +508,11 @@ const Payment = ()=>{
                                     children: "Credit or Debit Card"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Payment/Payment.tsx",
-                                    lineNumber: 119,
+<<<<<<< HEAD
+                                    lineNumber: 112,
+=======
+                                    lineNumber: 124,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$stripe$2f$react$2d$stripe$2d$js$2f$dist$2f$react$2d$stripe$2e$umd$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardElement"], {
@@ -480,13 +520,21 @@ const Payment = ()=>{
                                     className: "mt-2 p-3 border rounded-md shadow-sm"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Payment/Payment.tsx",
-                                    lineNumber: 120,
+<<<<<<< HEAD
+                                    lineNumber: 113,
+=======
+                                    lineNumber: 125,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Payment/Payment.tsx",
-                            lineNumber: 118,
+<<<<<<< HEAD
+                            lineNumber: 111,
+=======
+                            lineNumber: 123,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                             columnNumber: 11
                         }, this),
                         payment_success_loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -497,14 +545,22 @@ const Payment = ()=>{
                                     className: "animate-spin"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Payment/Payment.tsx",
-                                    lineNumber: 128,
+<<<<<<< HEAD
+                                    lineNumber: 121,
+=======
+                                    lineNumber: 133,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                                     columnNumber: 15
                                 }, this),
                                 "Please wait"
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Payment/Payment.tsx",
-                            lineNumber: 127,
+<<<<<<< HEAD
+                            lineNumber: 120,
+=======
+                            lineNumber: 132,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                             columnNumber: 13
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                             type: "submit",
@@ -512,31 +568,52 @@ const Payment = ()=>{
                             children: "Pay Now"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Payment/Payment.tsx",
-                            lineNumber: 132,
+<<<<<<< HEAD
+                            lineNumber: 125,
+=======
+                            lineNumber: 137,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Payment/Payment.tsx",
-                    lineNumber: 117,
+<<<<<<< HEAD
+                    lineNumber: 110,
+=======
+                    lineNumber: 122,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/Payment/Payment.tsx",
-            lineNumber: 103,
+<<<<<<< HEAD
+            lineNumber: 96,
+=======
+            lineNumber: 108,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Payment/Payment.tsx",
-        lineNumber: 102,
+<<<<<<< HEAD
+        lineNumber: 95,
+=======
+        lineNumber: 107,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
         columnNumber: 5
     }, this);
 };
-_s(Payment, "rz364xL9nwrl1M48A86cFYFBQUM=", false, function() {
+_s(Payment, "uz0qGACUBjxwp5szzJDcIusd6tU=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$stripe$2f$react$2d$stripe$2d$js$2f$dist$2f$react$2d$stripe$2e$umd$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useStripe"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$stripe$2f$react$2d$stripe$2d$js$2f$dist$2f$react$2d$stripe$2e$umd$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useElements"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$Zustand_Store$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],

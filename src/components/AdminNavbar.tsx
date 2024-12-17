@@ -24,12 +24,7 @@ const AdminNavbar: React.FC<AdminNavbarProps> = ({ title, menuItems }) => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const handleLogout = () => {
-    // Remove token from localStorage
-    localStorage.removeItem("token");
-    // Redirect to login page
-    router.push("/login");
-  };
+
 
   return (
     <>
@@ -159,30 +154,7 @@ const AdminNavbar: React.FC<AdminNavbarProps> = ({ title, menuItems }) => {
         ></div>
       )}
 
-      {/* Confirmation Dialog for Logout */}
-      {showLogoutDialog && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-lg font-semibold mb-4">
-              Are you sure you want to log out?
-            </h3>
-            <div className="flex space-x-4">
-              <button
-                className="px-4 py-2 bg-green-500 text-white rounded-lg"
-                onClick={handleLogout}
-              >
-                Yes
-              </button>
-              <button
-                className="px-4 py-2 bg-red-500 text-white rounded-lg"
-                onClick={() => setShowLogoutDialog(false)}
-              >
-                No
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+    
     </>
   );
 };

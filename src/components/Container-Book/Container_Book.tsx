@@ -157,12 +157,7 @@ const Container_Book = () => {
       // Send the request directly to book the container without authentication
       const response = await axios.post(
         `${url}/container/booked_container`,
-        data ,
-        {
-          headers: {
-            token: localStorage.getItem("accessToken"),
-          },
-        }
+        data 
       );
       if (response.status === 200) {
         toast.success("Container Booking Successfully Saved");

@@ -1,32 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Truck, Ship, Shield, Clock, Globe } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Container_Book from "@/components/Container-Book/Container_Book";
-import { Sidebar } from "@/components/Sidebar/sidebar";
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter } from "@/components/ui/dialog"; // Assuming shadcn dialog component
 import Link from 'next/link'
 export default function HomePage() {
   const [showBookingForm, setShowBookingForm] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
-  const [isDialogOpen, setIsDialogOpen] = useState(false); // State to control confirmation dialog
-  const [showAuthModal, setShowAuthModal] = useState(false); // State for signup/login modal
-  const router = useRouter();
 
-  // Check if token is in localStorage and update login status
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true); // Set isLoggedIn to true if token exists
-    }
-  }, []); // Only run once on component mount
 
-  // Logout function
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // Remove token from localStorage
-    router.push("/login"); // Redirect to login page
-  };
 
 
 
@@ -83,9 +63,7 @@ export default function HomePage() {
               <div className="flex items-center justify-between mb-12">
                 <h2 className="text-3xl font-bold text-center">Our Services</h2>
                 <Link href={'/containers_details'} className="text-blue-500 hover:underline text-lg">Booked Containers</Link>
-                {isLoggedIn && ( // Conditionally render Logout button
-                  <Button onClick={() => setIsDialogOpen(true)}>Logout</Button>
-                )}
+               
               </div>
               <section id="rent" className= "rounded-lg my-10 py-16 bg-blue-50">
             <div className="container mx-auto text-center">
@@ -164,22 +142,7 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* Logout Confirmation Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent>
-          <DialogHeader>Confirm Logout</DialogHeader>
-          <p>Are you sure you want to logout?</p>
-          <DialogFooter>
-            <Button onClick={handleLogout} className="bg-red-500">
-              Yes, Logout
-            </Button>
-            <Button variant="secondary" onClick={() => setIsDialogOpen(false)}>
-              No, Cancel
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
+   
     
     </div>
   );
