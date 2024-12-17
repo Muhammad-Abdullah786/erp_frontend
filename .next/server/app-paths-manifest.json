@@ -2,7 +2,8 @@
   "/page": "app/page.js",
   "/_not-found/page": "app/_not-found/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/admin/dashboard/page": "app/admin/dashboard/page.js",
-  "/login/page": "app/login/page.js",
-  "/admin/tracking/page": "app/admin/tracking/page.js"
+  "/containers_details/page": "app/containers_details/page.js",
+  "/containerBooking/page": "app/containerBooking/page.js",
+  "/payment/page": "app/payment/page.js",
+  "/login/page": "app/login/page.js"
 }

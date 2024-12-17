@@ -8,15 +8,19 @@
       "static/media/GeistVF-s.p.7fe29570.woff",
       "static/media/GeistMonoVF-s.p.a9159d35.woff"
     ],
-    "[project]/src/app/admin/dashboard/page": [
+    "[project]/src/app/containers_details/page": [
+      "static/media/GeistVF-s.p.7fe29570.woff",
+      "static/media/GeistMonoVF-s.p.a9159d35.woff"
+    ],
+    "[project]/src/app/containerBooking/page": [
+      "static/media/GeistVF-s.p.7fe29570.woff",
+      "static/media/GeistMonoVF-s.p.a9159d35.woff"
+    ],
+    "[project]/src/app/payment/page": [
       "static/media/GeistVF-s.p.7fe29570.woff",
       "static/media/GeistMonoVF-s.p.a9159d35.woff"
     ],
     "[project]/src/app/login/page": [
-      "static/media/GeistVF-s.p.7fe29570.woff",
-      "static/media/GeistMonoVF-s.p.a9159d35.woff"
-    ],
-    "[project]/src/app/admin/tracking/page": [
       "static/media/GeistVF-s.p.7fe29570.woff",
       "static/media/GeistMonoVF-s.p.a9159d35.woff"
     ]
