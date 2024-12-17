@@ -4,13 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import useStore from '@/store/Zustand_Store'
 import { useRouter } from 'next/navigation'
-<<<<<<< HEAD
 import axios from 'axios'
 import { url } from '@/apiURL'
-=======
-import { url } from '@/apiURL'
-import axios from 'axios'
->>>>>>> dev
+
 const Tracking_Search = () => {
 
   const router = useRouter();
