@@ -7,8 +7,7 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 {
 // export const url = "https://back-mu-olive.vercel.app/v1"; // for main
 // export const url =
-//   "https://erp-frontend-git-dev-muhammad-abdullah786s-projects.vercel.app/v1"; // this is for devevlop branch
-//   "https://erp-frontend-git-dev-muhammad-abdullah786s-projects.vercel.app/v1";
+//   "https://erp-frontend-git-dev-muhammad-abdullah786s-projects.vercel.app/v1"; 
 // // this is for devevlop branch
 __turbopack_esm__({
     "url": (()=>url)
