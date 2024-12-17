@@ -36,6 +36,7 @@ const Tracking_Search = () => {
         return;
       }
       setshow(false);
+      localStorage.setItem('tracking_id', search);
       set_tracking_id(search);
       setsearch("");
       router.push(`/tracking`);

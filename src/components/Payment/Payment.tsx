@@ -24,6 +24,13 @@ const Payment = () => {
   const set_installment_amount = useStore(
     (state) => state.set_installment_amount
   );
+  const client_container_installment_id = useStore((state) => state.client_container_installment_id);
+  const client_container_id = useStore((state) => state.client_container_id); 
+  const update_installment_payment = useStore((state) => state.update_installment_payment);
+  const set_client_container_installment_id = useStore((state) => state.set_client_container_installment_id);
+  const set_client_container_id = useStore((state) => state.set_client_container_id);
+
+
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,11 +40,6 @@ const Payment = () => {
       console.error(
         "Stripe or Elements not loaded, or client_secret is missing"
       );
-      // toast({
-      //   title: "Error",
-      //   description:
-      //     "Stripe or Elements not loaded, or client_secret is missing.",
-      // });
       toast.error(
         `Payment Failed! Please try Again  ${new Date().toLocaleDateString()} \n Maybe Stripe or Elements not loaded, or client_secret is missing.`
       );
@@ -49,10 +51,6 @@ const Payment = () => {
 
     if (!cardElement) {
       console.error("Card element is not loaded.");
-      // toast({
-      //   title: "Error",
-      //   description: "Card element is not loaded. Please try again.",
-      // });
       toast.error(
         `Payment Failed! Please try Again  ${new Date().toLocaleDateString()} \n Maybe Card element is not loaded.`
       );
@@ -78,16 +76,30 @@ const Payment = () => {
       set_payment_success_loading(false);
       set_payment_loading(false);
     } else if (paymentIntent) {
-      await post_container_booking();
-  
-      toast.success(
-        `Payment Successful & Your Container Booked on ${new Date().toLocaleDateString()}`
-      );
-      set_client_secret("");
-      set_payment_success_loading(false);
-      set_payment_loading(false);
-      set_installment_amount(null);
-      router.push("/login");
+       
+       if(client_container_installment_id && client_container_id && installment_amount ){
+           await update_installment_payment();  
+           set_client_secret("");
+           set_client_container_installment_id(null);
+           set_client_container_id(null);
+           set_installment_amount(null);
+           toast.success(
+            `Installment is Paid in  ${new Date().toLocaleDateString()}`
+          );
+           return;
+       }else{
+        await post_container_booking();
+
+        toast.success(
+          `Payment Successful & Your Container Booked on ${new Date().toLocaleDateString()}`
+        );
+        set_client_secret("");
+        set_payment_success_loading(false);
+        set_payment_loading(false);
+        set_installment_amount(null);
+        router.push("/login");
+       }
+   
     }
   };
 

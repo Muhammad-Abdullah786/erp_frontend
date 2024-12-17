@@ -6,6 +6,12 @@
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: require } = __turbopack_context__;
 {
 // export const url = "https://back-mu-olive.vercel.app/v1"; // for main
+<<<<<<< HEAD
+=======
+// export const url =
+//   "https://erp-frontend-git-dev-muhammad-abdullah786s-projects.vercel.app/v1"; 
+// // this is for devevlop branch
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
 __turbopack_esm__({
     "url": (()=>url)
 });
@@ -219,6 +225,126 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: require } = __turbopack_context__;
 {
+// "use client";
+// import { RxEyeClosed } from "react-icons/rx";
+// import Link from "next/link";
+// import { useState } from "react";
+// import useSWRMutation from "swr/mutation";
+// import { useRouter } from "next/navigation"; // For redirection
+// import { login } from "@/services/authService"; // Use only one login function
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { toast } from "react-toastify"; // Toast notification
+// import { TfiEye } from "react-icons/tfi";
+// import { url } from "@/apiURL";
+// export default function LoginPage() {
+//   const [formData, setFormData] = useState<any>({
+//     name: "",
+//     password: "",
+//   });
+//   const [showPassword, setShowPassword] = useState(false); // Toggle for password visibility
+//   const router = useRouter();
+//   // Login mutation
+//   const {
+//     trigger: loginForm,
+//     isMutating: isLoading,
+//     error,
+//   } = useSWRMutation(`${url}/login`, async (_, { arg }) => {
+//     try {
+//       const { name, password } = arg; // Destructure name and password from arg
+//       const data = await login(name, password); // Pass them as arguments to the login function
+//       // Store tokens
+//       if (data.data.accessToken) {
+//         localStorage.setItem("accessToken", data.accessToken);
+//       }
+//       if (data.data.refreshToken) {
+//         localStorage.setItem("refreshToken", data.refreshToken);
+//       }
+//       // Check the greeting (role) and redirect accordingly
+//       const { greeting } = data.data;
+//       console.log("Data", data, "Greeting", greeting);
+//       if (greeting === "admin") {
+//         toast.success("Login successful! Redirecting to admin dashboard.");
+//         router.push("/admin/dashboard");
+//       } else if (
+//         greeting === "hr" ||
+//         greeting === "sales" ||
+//         greeting === "accounts" ||
+//         greeting === "driver"
+//       ) {
+//         toast.success("Login successful! Redirecting to employee dashboard.");
+//         router.push(`/employee/${greeting.toLowerCase()}/dashboard`);
+//       } else {
+//         toast.success("Login successful! Redirecting to user dashboard.");
+//         router.push("/user/dashboard");
+//       }
+//       return data;
+//     } catch (err) {
+//       toast.error("Login failed. Please try again.");
+//       throw err; // This will trigger the error handling in SWRMutation
+//     }
+//   });
+//   // Handle form change
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setFormData({ ...formData, [e.target.name]: e.target.value });
+//   };
+//   // Handle form submit with validation
+//   const handleSubmit = (e: React.FormEvent) => {
+//     e.preventDefault();
+//     // Check if name and password are filled
+//     if (!formData.name || !formData.password) {
+//       toast.error("Please fill out all required fields.");
+//       return;
+//     }
+//     // Proceed to login if all fields are filled
+//     loginForm(formData);
+//   };
+//   return (
+//     <div className="flex items-center bg-gray-300 justify-center min-h-screen px-5">
+//       <div className="max-w-lg w-full bg-white p-8 shadow-xl rounded-xl">
+//         <h1 className="text-3xl font-bold mb-4 text-center">Login</h1>
+//         <form onSubmit={handleSubmit} className="space-y-4">
+//           <Input
+//             name="name" // Change from 'username' to 'name'
+//             type="text"
+//             placeholder="Username"
+//             value={formData.name} // This should stay the same
+//             onChange={handleChange}
+//             required
+//           />
+//           <div className="relative">
+//             <Input
+//               name="password"
+//               type={showPassword ? "text" : "password"}
+//               placeholder="Password"
+//               value={formData.password}
+//               onChange={handleChange}
+//               required
+//             />
+//             <button
+//               type="button"
+//               onClick={() => setShowPassword(!showPassword)}
+//               className="absolute inset-y-0 right-0 pr-3 flex items-center"
+//             >
+//               {showPassword ? <TfiEye /> : <RxEyeClosed />}
+//             </button>
+//           </div>
+//           <Button type="submit" disabled={isLoading} className="w-full">
+//             {isLoading ? "Logging in..." : "Login"}
+//           </Button>
+//           <div className="text-end">
+//             <Link
+//               className="text-sm text-blue-600 underline hover:unset"
+//               href="/forgotPassword"
+//             >
+//               Forgot Password
+//             </Link>
+//           </div>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// }
 __turbopack_esm__({
     "default": (()=>LoginPage)
 });
@@ -315,7 +441,11 @@ function LoginPage() {
                     children: "Login"
                 }, void 0, false, {
                     fileName: "[project]/src/app/login/page.tsx",
+<<<<<<< HEAD
                     lineNumber: 87,
+=======
+                    lineNumber: 220,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -332,7 +462,11 @@ function LoginPage() {
                             required: true
                         }, void 0, false, {
                             fileName: "[project]/src/app/login/page.tsx",
+<<<<<<< HEAD
                             lineNumber: 90,
+=======
+                            lineNumber: 223,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -347,7 +481,11 @@ function LoginPage() {
                                     required: true
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/login/page.tsx",
+<<<<<<< HEAD
                                     lineNumber: 100,
+=======
+                                    lineNumber: 233,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -356,22 +494,38 @@ function LoginPage() {
                                     className: "absolute inset-y-0 right-0 pr-3 flex items-center",
                                     children: showPassword ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$tfi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TfiEye"], {}, void 0, false, {
                                         fileName: "[project]/src/app/login/page.tsx",
+<<<<<<< HEAD
                                         lineNumber: 113,
                                         columnNumber: 31
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$rx$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["RxEyeClosed"], {}, void 0, false, {
                                         fileName: "[project]/src/app/login/page.tsx",
                                         lineNumber: 113,
+=======
+                                        lineNumber: 246,
+                                        columnNumber: 31
+                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$rx$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["RxEyeClosed"], {}, void 0, false, {
+                                        fileName: "[project]/src/app/login/page.tsx",
+                                        lineNumber: 246,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                                         columnNumber: 44
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/login/page.tsx",
+<<<<<<< HEAD
                                     lineNumber: 108,
+=======
+                                    lineNumber: 241,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/login/page.tsx",
+<<<<<<< HEAD
                             lineNumber: 99,
+=======
+                            lineNumber: 232,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -381,7 +535,11 @@ function LoginPage() {
                             children: isLoading ? "Logging in..." : "Login"
                         }, void 0, false, {
                             fileName: "[project]/src/app/login/page.tsx",
+<<<<<<< HEAD
                             lineNumber: 117,
+=======
+                            lineNumber: 250,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -392,29 +550,49 @@ function LoginPage() {
                                 children: "Forgot Password"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/login/page.tsx",
+<<<<<<< HEAD
                                 lineNumber: 122,
+=======
+                                lineNumber: 255,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/login/page.tsx",
+<<<<<<< HEAD
                             lineNumber: 121,
+=======
+                            lineNumber: 254,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/login/page.tsx",
+<<<<<<< HEAD
                     lineNumber: 89,
+=======
+                    lineNumber: 222,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/login/page.tsx",
+<<<<<<< HEAD
             lineNumber: 86,
+=======
+            lineNumber: 219,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/login/page.tsx",
+<<<<<<< HEAD
         lineNumber: 85,
+=======
+        lineNumber: 218,
+>>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
         columnNumber: 5
     }, this);
 }
