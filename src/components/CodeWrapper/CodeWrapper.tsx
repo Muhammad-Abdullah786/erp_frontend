@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useRouter , usePathname  } from "next/navigation";
+import { url } from "@/apiURL";
 
 interface CodeWrapperProps {
   children: React.ReactNode; // Content to render if the user is logged in
@@ -29,7 +30,7 @@ const CodeWrapper: React.FC<CodeWrapperProps> = ({children }) => {
 
       try {
         // API call to verify token
-        const response = await axios.post(`http://localhost:3000/v1/container/verify_token`, {} , {
+        const response = await axios.post(`${url}/container/verify_token`, {} , {
           headers: { token : localStorage.getItem("accessToken") },
         });
         if (response.status === 200) {

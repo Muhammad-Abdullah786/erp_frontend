@@ -36,6 +36,7 @@ export default function Navbar() {
           <li><a href="/about" className="hover:underline">About Us</a></li>
           <li><a href="/services" className="hover:underline">Services</a></li>
           <li><a href="/contact" className="hover:underline">Contact</a></li>
+          <li><a href="/" className="hover:underline">AdminPanel</a></li>
         </ul>
         <div className="flex space-x-4">
           {isLoggedIn ? (
