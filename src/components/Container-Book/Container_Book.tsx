@@ -46,9 +46,7 @@ type FormValues = {
 };
 const Container_Book = () => {
   const [step, setStep] = useState(1); // Track the step
-
   const set_client_secret = useStore((state) => state.set_client_secret);
-
   const save_form_data = useStore((state) => state.save_form_data);
   const set_payment_loading = useStore((state) => state.set_payment_loading);
   const payment_loading = useStore((state) => state.payment_loading);

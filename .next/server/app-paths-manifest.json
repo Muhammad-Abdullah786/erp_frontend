@@ -2,7 +2,7 @@
   "/page": "app/page.js",
   "/_not-found/page": "app/_not-found/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/login/page": "app/login/page.js",
   "/admin/dashboard/page": "app/admin/dashboard/page.js",
-  "/employeeRegister/page": "app/employeeRegister/page.js"
+  "/login/page": "app/login/page.js",
+  "/admin/tracking/page": "app/admin/tracking/page.js"
 }

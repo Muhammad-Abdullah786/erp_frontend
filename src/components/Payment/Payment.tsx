@@ -88,7 +88,7 @@ const Payment = () => {
           );
            return;
        }else{
-        await post_container_booking();
+        // await post_container_booking();
 
         toast.success(
           `Payment Successful & Your Container Booked on ${new Date().toLocaleDateString()}`
