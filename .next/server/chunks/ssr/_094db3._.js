@@ -81,227 +81,6 @@ __turbopack_export_namespace__(__TURBOPACK__imported__module__$5b$project$5d2f$s
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: require } = __turbopack_context__;
 {
-// "use client";
-// import { url } from "@/apiURL";
-// import React, { useState } from "react";
-// import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-// import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-// import { useRouter } from "next/navigation";
-// import { TfiEye } from "react-icons/tfi"; // Eye icon for showing password
-// import { RxEyeClosed } from "react-icons/rx"; // Eye closed icon for hiding password
-// const RegisterEmployee = () => {
-//   const [formData, setFormData] = useState({
-//     username: "",
-//     name: "",
-//     email: "",
-//     password: "",
-//     confirmPassword: "",
-//     phoneno: "",
-//     address: "",
-//     cnic_no: "",
-//     profilePic: "",
-//     role: "",
-//   });
-//   const router = useRouter();
-//   const [imageFile, setImageFile] = useState<File | null>(null);
-//   const [loading, setLoading] = useState(false);
-//   const [alert, setAlert] = useState<{ message: string; type: "success" | "error" } | null>(null);
-//   // States to manage show/hide password functionality
-//   const [showPassword, setShowPassword] = useState(false);
-//   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-//     setFormData({ ...formData, [e.target.name]: e.target.value });
-//   };
-//   const handleRegister = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     // Validate that password and confirmPassword match
-//     if (formData.password !== formData.confirmPassword) {
-//       setAlert({ message: "Passwords do not match!", type: "error" });
-//       return;
-//     }
-//     if (!imageFile) {
-//       setAlert({ message: "Please upload an image before registering!", type: "error" });
-//       return;
-//     }
-//     setLoading(true);
-//     try {
-//       // Upload the image
-//       const imageFormData = new FormData();
-//       imageFormData.append("file", imageFile);
-//       imageFormData.append("upload_preset", "helloWorld");
-//       const imageRes = await fetch("https://api.cloudinary.com/v1_1/dr5xqeyrf/image/upload", {
-//         method: "POST",
-//         body: imageFormData,
-//       });
-//       const imageData = await imageRes.json();
-//       const imageUrl = imageData.secure_url;
-//       if (!imageUrl) {
-//         throw new Error("Image upload failed");
-//       }
-//       // Update form data with profile picture URL
-//       const updatedFormData = { ...formData, profilePic: imageUrl };
-//       // Register the employee
-//       const registerRes = await fetch(`${url}/employee/register`, {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(updatedFormData),
-//       });
-//       if (registerRes.ok) {
-//         setAlert({ message: "Employee registered successfully!", type: "success" });
-//       } else {
-//         throw new Error("Failed to register employee");
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       setAlert({ message: "An error occurred. Please try again.", type: "error" });
-//     } finally {
-//       setLoading(false);
-//       router.push("/login");
-//     }
-//   };
-//   return (
-//     <div className="max-w-lg mx-auto bg-gray-50 mt-6 p-2">
-//       <h1 className="text-2xl text-center font-bold mb-2">Register Employee</h1>
-//       {alert && (
-//         <Alert variant={alert.type === "error" ? "destructive" : "default"} className="mb-4">
-//           <AlertTitle>{alert.type === "success" ? "Success" : "Error"}</AlertTitle>
-//           <AlertDescription>{alert.message}</AlertDescription>
-//         </Alert>
-//       )}
-//       <form onSubmit={handleRegister} className="space-y-4">
-//         {/* Username Input */}
-//         <div>
-//           <Input
-//             type="text"
-//             name="username"
-//             placeholder="Username"
-//             value={formData.username}
-//             onChange={handleInputChange}
-//             required
-//           />
-//         </div>
-//         {/* Name Input */}
-//         <div>
-//           <Input
-//             type="text"
-//             name="name"
-//             placeholder="Name"
-//             value={formData.name}
-//             onChange={handleInputChange}
-//             required
-//           />
-//         </div>
-//         {/* Email Input */}
-//         <div>
-//           <Input
-//             type="email"
-//             name="email"
-//             placeholder="Email"
-//             value={formData.email}
-//             onChange={handleInputChange}
-//             required
-//           />
-//         </div>
-//         {/* Password Input */}
-//         <div className="relative">
-//           <Input
-//             type={showPassword ? "text" : "password"}
-//             name="password"
-//             placeholder="Password"
-//             value={formData.password}
-//             onChange={handleInputChange}
-//             required
-//           />
-//           <button
-//             type="button"
-//             onClick={() => setShowPassword((prev) => !prev)}
-//             className="absolute right-2 top-1/2 transform -translate-y-1/2"
-//           >
-//               {showPassword ? <TfiEye />  :  <RxEyeClosed />}
-//               </button>
-//         </div>
-//         {/* Confirm Password Input */}
-//         <div className="relative">
-//           <Input
-//             type={showConfirmPassword ? "text" : "password"}
-//             name="confirmPassword"
-//             placeholder="Confirm Password"
-//             value={formData.confirmPassword}
-//             onChange={handleInputChange}
-//             required
-//           />
-//           <button
-//             type="button"
-//             onClick={() => setShowConfirmPassword((prev) => !prev)}
-//             className="absolute right-2 top-1/2 transform -translate-y-1/2"
-//           >
-//               {showConfirmPassword ? <TfiEye />  :  <RxEyeClosed />}
-//               </button>
-//         </div>
-//         {/* Phone Number Input */}
-//         <div>
-//           <Input
-//             type="text"
-//             name="phoneno"
-//             placeholder="Phone Number"
-//             value={formData.phoneno}
-//             onChange={handleInputChange}
-//             required
-//           />
-//         </div>
-//         {/* Address Input */}
-//         <div>
-//           <Input
-//             type="text"
-//             name="address"
-//             placeholder="Address"
-//             value={formData.address}
-//             onChange={handleInputChange}
-//             required
-//           />
-//         </div>
-//         {/* CNIC Number Input */}
-//         <div>
-//           <Input
-//             type="text"
-//             name="cnic_no"
-//             placeholder="CNIC number"
-//             value={formData.cnic_no}
-//             onChange={handleInputChange}
-//             required
-//           />
-//         </div>
-//         {/* Role Input */}
-//         <div>
-//           <Input
-//             type="text"
-//             name="role"
-//             placeholder="Role (e.g., Admin, Manager)"
-//             value={formData.role}
-//             onChange={handleInputChange}
-//             required
-//           />
-//         </div>
-//         {/* Profile Picture Upload */}
-//         <div>
-//           <label className="block font-medium ">Profile Picture</label>
-//           <Input
-//             type="file"
-//             accept="image/*"
-//             onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-//             required
-//           />
-//         </div>
-//         {/* Register Button */}
-//         <Button type="submit" className="w-full mt-1" disabled={loading}>
-//           {loading ? "Processing..." : "Register"}
-//         </Button>
-//       </form>
-//     </div>
-//   );
-// };
-// export default RegisterEmployee;
 __turbopack_esm__({
     "default": (()=>__TURBOPACK__default__export__)
 });
@@ -314,20 +93,36 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$GetEmpl
 const page = ()=>{
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$AdminNavbar$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$AdminNavbar$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
+                title: "Admin Panel",
+                menuItems: [
+                    {
+                        label: "Add Employees",
+                        href: "/employeeRegister"
+                    },
+                    {
+                        label: "Employees List",
+                        href: "/GetEmployee"
+                    },
+                    {
+                        label: "Container Tracking",
+                        href: "/admin/tracking"
+                    }
+                ]
+            }, void 0, false, {
                 fileName: "[project]/src/app/admin/dashboard/page.tsx",
-                lineNumber: 249,
-                columnNumber: 9
+                lineNumber: 7,
+                columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$GetEmployees$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/app/admin/dashboard/page.tsx",
-                lineNumber: 250,
-                columnNumber: 9
+                lineNumber: 15,
+                columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/admin/dashboard/page.tsx",
-        lineNumber: 248,
+        lineNumber: 6,
         columnNumber: 5
     }, this);
 };

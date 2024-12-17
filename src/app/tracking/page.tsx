@@ -1,12 +1,12 @@
 'use client'
 
 import dynamic from "next/dynamic";
-import TrackingContainer from "@/components/Tracking_container/Tracking_container";
+
 // Dynamically import Tracking_container to mark it as a client-side component
-// const TrackingContainer = dynamic(
-//   () => import("@/components/Tracking_container/Tracking_container"),
-//   { ssr: false }
-// );
+const TrackingContainer = dynamic(
+  () => import("@/components/Tracking_container/Tracking_container"),
+  { ssr: false }
+);
 
 const page = () => {
   return (

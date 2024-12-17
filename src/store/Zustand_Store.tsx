@@ -21,7 +21,11 @@ const useStore = create<any>((set : any , get: any) => ({
    try {
         const form_data = get().form_data;
         console.log(form_data);
-      const post_data = await axios.post(`${url}/container/booked_container` , form_data);
+      const post_data = await axios.post(`${url}/container/booked_container` , form_data , {
+        headers : {
+          token : localStorage.getItem('token')
+        }
+      });
       if(post_data.status === 200) {
         console.log(post_data);
       }
@@ -32,12 +36,13 @@ const useStore = create<any>((set : any , get: any) => ({
   update_installment_payment : async() => {
     const { client_container_installment_id, installment_amount , client_container_id } = get();
     try {
-      const response = await axios.post(`${url}/container/update_client_container_installment`, {
+      const response = await axios.post("http://localhost:3000/v1/container/update_client_container_installment", {
         containerId : client_container_id,
         installmentId : client_container_installment_id,
         amount : installment_amount,
       });
       console.log(response);
+      return response.data;
     } catch (error) {
        console.log(error);
     }

@@ -14,23 +14,16 @@ const Payment = () => {
     useState(false);
   const stripe = useStripe();
   const elements = useElements();
-  const client_secret = useStore((state) => state.client_secret); 
+  const client_secret = useStore((state) => state.client_secret); // Retrieve client_secret from Zustand
   const post_container_booking = useStore(
     (state) => state.post_container_booking
-  ); 
-  const set_payment_loading = useStore((state) => state.set_payment_loading); 
+  ); // Retrieve post_container_
+  const set_payment_loading = useStore((state) => state.set_payment_loading); //
   const set_client_secret = useStore((state) => state.set_client_secret);
   const installment_amount = useStore((state) => state.installment_amount);
   const set_installment_amount = useStore(
     (state) => state.set_installment_amount
   );
-  const client_container_installment_id = useStore((state) => state.client_container_installment_id);
-  const client_container_id = useStore((state) => state.client_container_id); 
-  const update_installment_payment = useStore((state) => state.update_installment_payment);
-  const set_client_container_installment_id = useStore((state) => state.set_client_container_installment_id);
-  const set_client_container_id = useStore((state) => state.set_client_container_id);
-
-
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,6 +33,11 @@ const Payment = () => {
       console.error(
         "Stripe or Elements not loaded, or client_secret is missing"
       );
+      // toast({
+      //   title: "Error",
+      //   description:
+      //     "Stripe or Elements not loaded, or client_secret is missing.",
+      // });
       toast.error(
         `Payment Failed! Please try Again  ${new Date().toLocaleDateString()} \n Maybe Stripe or Elements not loaded, or client_secret is missing.`
       );
@@ -51,6 +49,10 @@ const Payment = () => {
 
     if (!cardElement) {
       console.error("Card element is not loaded.");
+      // toast({
+      //   title: "Error",
+      //   description: "Card element is not loaded. Please try again.",
+      // });
       toast.error(
         `Payment Failed! Please try Again  ${new Date().toLocaleDateString()} \n Maybe Card element is not loaded.`
       );
@@ -68,6 +70,10 @@ const Payment = () => {
     );
 
     if (error) {
+      // toast({
+      //   title: "Payment Failed",
+      //   description: error.message || "Something went wrong with the payment.",
+      // });
       toast.error(
         `Payment Failed! Please try Again  ${new Date().toLocaleDateString()} \n ${
           error.message || "Something went wrong with the payment."
@@ -76,30 +82,19 @@ const Payment = () => {
       set_payment_success_loading(false);
       set_payment_loading(false);
     } else if (paymentIntent) {
-       
-       if(client_container_installment_id && client_container_id && installment_amount ){
-           await update_installment_payment();  
-           set_client_secret("");
-           set_client_container_installment_id(null);
-           set_client_container_id(null);
-           set_installment_amount(null);
-           toast.success(
-            `Installment is Paid in  ${new Date().toLocaleDateString()}`
-          );
-           return;
-       }else{
-        await post_container_booking();
-
-        toast.success(
-          `Payment Successful & Your Container Booked on ${new Date().toLocaleDateString()}`
-        );
-        set_client_secret("");
-        set_payment_success_loading(false);
-        set_payment_loading(false);
-        set_installment_amount(null);
-        router.push("/login");
-       }
-   
+      await post_container_booking();
+      // toast({
+      //   title: "Payment Successful & Your Container Booked",
+      //   description: `Payment processed successfully on ${new Date().toLocaleDateString()}`,
+      // });
+      toast.success(
+        `Payment Successful & Your Container Booked on ${new Date().toLocaleDateString()}`
+      );
+      set_client_secret("");
+      set_payment_success_loading(false);
+      set_payment_loading(false);
+      set_installment_amount(null);
+      router.push("/login");
     }
   };
 

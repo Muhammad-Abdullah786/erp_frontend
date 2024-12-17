@@ -11,33 +11,10 @@
     "[project]/src/app/login/page": [
       "static/media/GeistVF-s.p.7fe29570.woff",
       "static/media/GeistMonoVF-s.p.a9159d35.woff"
-<<<<<<< HEAD
-=======
     ],
-    "[project]/src/app/user/dashboard/page": [
+    "[project]/src/app/admin/dashboard/page": [
       "static/media/GeistVF-s.p.7fe29570.woff",
       "static/media/GeistMonoVF-s.p.a9159d35.woff"
-    ],
-    "[project]/src/app/containerBooking/page": [
-      "static/media/GeistVF-s.p.7fe29570.woff",
-      "static/media/GeistMonoVF-s.p.a9159d35.woff"
-    ],
-    "[project]/src/app/payment/page": [
-      "static/media/GeistVF-s.p.7fe29570.woff",
-      "static/media/GeistMonoVF-s.p.a9159d35.woff"
-    ],
-    "[project]/src/app/search_tracking/page": [
-      "static/media/GeistVF-s.p.7fe29570.woff",
-      "static/media/GeistMonoVF-s.p.a9159d35.woff"
-    ],
-    "[project]/src/app/tracking/page": [
-      "static/media/GeistVF-s.p.7fe29570.woff",
-      "static/media/GeistMonoVF-s.p.a9159d35.woff"
-    ],
-    "[project]/src/app/containers_details/page": [
-      "static/media/GeistVF-s.p.7fe29570.woff",
-      "static/media/GeistMonoVF-s.p.a9159d35.woff"
->>>>>>> dec6d103776e7c8357aaf7bb5c2aaf47375c009c
     ]
   },
   "appUsingSizeAdjust": true,

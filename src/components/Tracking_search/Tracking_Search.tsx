@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import useStore from '@/store/Zustand_Store'
 import { useRouter } from 'next/navigation'
-import { url } from '@/apiURL'
 import axios from 'axios'
+import { url } from '@/apiURL'
 const Tracking_Search = () => {
 
   const router = useRouter();
@@ -36,7 +36,6 @@ const Tracking_Search = () => {
         return;
       }
       setshow(false);
-      localStorage.setItem('tracking_id', search);
       set_tracking_id(search);
       setsearch("");
       router.push(`/tracking`);

@@ -14,7 +14,7 @@ const CodeWrapper: React.FC<CodeWrapperProps> = ({children }) => {
  
   useEffect(() => {
     const verifyToken = async () => {
-
+     
       if (
         pathname === "/" || 
         pathname === "/containerBooking" || 
@@ -29,22 +29,25 @@ const CodeWrapper: React.FC<CodeWrapperProps> = ({children }) => {
 
       try {
         // API call to verify token
-        const response = await axios.post(`http://localhost:3000/v1/container/verify_token`, {} , {
+        const response = await axios.post("/api/verify-token", {
           headers: { token : localStorage.getItem("accessToken") },
         });
         if (response.status === 200) {
           // Redirect to home if already logged in and on login page
           if (pathname === "/login") {
-            router.replace("/");
+            router.replace("/home");
           }
+        } else {
+          throw new Error("Invalid token");
         }
       } catch (error) {
+        alert("Session expired. Please log in again.");
         router.replace("/login");
       }
     };
 
     verifyToken();
-  }, [router , pathname]);
+  }, [router]);
 
 
   return <>{children}</>;
