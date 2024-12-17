@@ -165,8 +165,8 @@ const Container_Book = () => {
         }
       );
       if (response.status === 200) {
-        toast.success("Container Booking Successfully Saved");
-        router.push("/payment"); // Navigate to the payment page
+        toast.success("Container Booking Successfully Saved")
+        router.push("/payment"); 
       }
     } catch (error) {
       toast.error("Failed to book container");

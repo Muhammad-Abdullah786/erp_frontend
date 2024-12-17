@@ -14,11 +14,11 @@ const Payment = () => {
     useState(false);
   const stripe = useStripe();
   const elements = useElements();
-  const client_secret = useStore((state) => state.client_secret); // Retrieve client_secret from Zustand
+  const client_secret = useStore((state) => state.client_secret); 
   const post_container_booking = useStore(
     (state) => state.post_container_booking
-  ); // Retrieve post_container_
-  const set_payment_loading = useStore((state) => state.set_payment_loading); //
+  ); 
+  const set_payment_loading = useStore((state) => state.set_payment_loading); 
   const set_client_secret = useStore((state) => state.set_client_secret);
   const installment_amount = useStore((state) => state.installment_amount);
   const set_installment_amount = useStore(
@@ -70,10 +70,6 @@ const Payment = () => {
     );
 
     if (error) {
-      // toast({
-      //   title: "Payment Failed",
-      //   description: error.message || "Something went wrong with the payment.",
-      // });
       toast.error(
         `Payment Failed! Please try Again  ${new Date().toLocaleDateString()} \n ${
           error.message || "Something went wrong with the payment."
@@ -83,10 +79,7 @@ const Payment = () => {
       set_payment_loading(false);
     } else if (paymentIntent) {
       await post_container_booking();
-      // toast({
-      //   title: "Payment Successful & Your Container Booked",
-      //   description: `Payment processed successfully on ${new Date().toLocaleDateString()}`,
-      // });
+  
       toast.success(
         `Payment Successful & Your Container Booked on ${new Date().toLocaleDateString()}`
       );
